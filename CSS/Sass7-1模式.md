@@ -16,8 +16,6 @@
 ####1个文件
 - `main.scss`
 
----
-
 ###Base文件夹
 `base/`文件夹存放项目中的模板文件。定义一些HTML元素公认的标准样式。<br>
 比如：[Reset.css](https://meyerweb.com/eric/tools/css/reset/) 和 [normalize.css](http://necolas.github.io/normalize.css/) 等
@@ -26,8 +24,6 @@
 - `_reset.scss`
 - `_typography.scss`
 - `_animations.scss`
-
----
 
 ###Layout文件夹
 `layout/`文件夹存放构建网站或者应用很小使用到的布局部分。常见的如：
@@ -38,8 +34,6 @@
 - `_sidebar.scss`
 - `_forms.scss`
 - `_navigation.scss`
-
----
 
 ###Components文件夹
 该文件夹包含各类具体模块，基本上是所有的独立模块，划分可以参考一些UI库的来划分，如:
