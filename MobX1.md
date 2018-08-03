@@ -5,7 +5,7 @@
 
 - `Actions`：类似Redux或者Vuex中的Actions可以异步和副作用的操作
 - `State`：Redux和Vuex都是单状态树，但是MobX可以多个状态
-- `Computed Values`：类似Vuex中的getter
+- `Computed Values`：类似Vuex中的getter，getter本质也是computed啦
 - `Reactions`：类似Redux中的connect
 
 #### 核心概念
