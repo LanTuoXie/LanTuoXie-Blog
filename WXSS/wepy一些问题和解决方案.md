@@ -36,4 +36,33 @@
 - 还有一种情况是，在循环体`<repeat>`中，在小程序中就会去new一个新的组件实例，如果你的内容重复，又不想定义多个组件名（new 多个组件），可以使用循环体`<repeat>`
 - 还有一种情况是`slot`，如果那个组件和数据无关，只是单纯的用于`slot`模板，它们最终生成的标签是不同的，因为这些生成的模板和数据无关，如果生成的模板中包含数据，那生成那部分关联数据的元素都是一样的
 - 这里说的数据是`<view class='{{ className }}' >{{ data }}</view>`这些花括号中的数据`className`和`data`，它们是共享的，所以它们最终生成的视图是一模一样的
+- 小程序的组件和目前流行的web组件有很大的区别，不能老用web组件传值得思维思考（很多莫名的bug），多从广播（订阅）的角度思考
 
+## repeat注意点
+
+- 分两种情况
+
+```html
+//repeat包着元素view text等
+<repeat for="{{mylist}}">
+  <view>{{item.name}}</view>
+</repeat>
+
+//repeat包着自定义组件
+<repeat for='{{myList}}'>
+  <List :mylist.sync="mylist"></List>
+  <Item :item='item'></Item>
+</repeat>
+```
+
+- 不支持在`repeat的组件`中使用`props`、`computed`、`watch`等特性
+- 原生组件的情况下，可以使用`.`或者`[]`的方式选择想传的数据，但是自定义组件不可以，要整个数据传入，或者传入`item`(`[{}, {}]`这种格式的数据)，`item`就是`wx:item`
+- 数据源要在`data`中，才有效果，静态属性不行
+- 尽量只包含一个组件，出现多个组件，会出现莫名的bug，其它的功能再在这一个组件内部处理，然后组件间的通信通过`$broadcast、$emit、$invoke`
+- 使用组件多使用`$broadcast、$emit、$invoke`的方式传值，别老想着使用`props`，会有很多莫名的bug
+- 关于`$broadcast、$emit、$invoke`，可以通过`mixins`拯救一下，唯一没什么莫名bug的
+
+## Object.create(null)
+
+- 上面返回的对象不带原型链，也即不包含`Object`原生对象的信息
+- 小程序中一些数据，像`data`需要的对象要带原型链，不能用这个,否则在绑定数据到模板的时候会报错
