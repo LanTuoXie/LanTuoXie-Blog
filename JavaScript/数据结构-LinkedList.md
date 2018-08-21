@@ -1,4 +1,4 @@
-##[Linked List：链表](https://github.com/trekhleb/javascript-algorithms/tree/master/src/data-structures/linked-list)
+# [Linked List：链表](https://github.com/trekhleb/javascript-algorithms/tree/master/src/data-structures/linked-list)
 
 > a linked list is a linear collection of data elements
 
@@ -6,8 +6,9 @@
 
 - 线性、有顺序的
 - 每个节点node由引用reference组成
-- 每个引用节点指向下一个引用节点 
-- 查找是从链头查到链尾，也可以反过来
+- 每个引用节点指向下一个引用节点
+- 查找是从链头查到链尾
+- 主要用于比较的对象是数组，数组随机性比较强，查找比较快，但是删除没链表快
 
 优点：
 
@@ -17,7 +18,7 @@
 缺点：
 
 - 由于是线性的，不利于随机存取
-- 查找慢，从链头查到链尾，或者从链尾到链头
+- 查找慢，从链头查到链尾
 
 时间复杂度：
 
