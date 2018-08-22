@@ -278,3 +278,9 @@ export default class DoublyLinkedList {
   }
 }
 ```
+- 只要是链表都有两个字段`head`和`tail`
+- `compare`可以自定义也可以用默认的
+- 添加`prepend`、`append`
+- 删除`delete`、`deleteHead`、`deleteTail`
+- 查找`find`
+- 转化`fromArray`、`toArray`
