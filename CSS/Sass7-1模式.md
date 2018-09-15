@@ -52,8 +52,8 @@
 >`_button.scss` 文件只负责`@import`，而实际功能在文件夹`button/`所有文件中<br>
 >一般做链接的文件不该用`_`前缀，而是用`button.scss`来区分，实际功能才用`_`前缀
 
-```scss
-//button.scss
+```css
+/* button.scss */
 
 @import "./button/_blue-button";
 @import "./button/_red-button";
@@ -123,33 +123,35 @@
 - `components/`
 - `containers/`
 
-```scss
-//参考bootstrap架构
-//xxx : 表示同理
-//app.scss
+```css
+/*
+ * 参考bootstrap架构
+ * xxx : 表示同理
+ * app.scss
+ */
 
-//导入变量
+/* 导入变量 */
 @import 'variables';
 
-//导入mixins
+/* 导入mixins */
 @import './mixins/clearfix';
 @import './mixins/xxx';
 
-//导入functions
+/* 导入functions */
 @import './functions/px2rem'
 @import './functions/xxx';
 
-//导入动画
-@import 'animations'
+/* 导入动画 */
+@import 'animations';
 
-//导入基本设置，排版、html标签等全局样式
+/* 导入基本设置，排版、html标签等全局样式 */
 @import 'global.scss';
 
-//导入components
+/* 导入components */
 @import './component/button';
 @import './component/xxx';
 
-//导入containers
+/* 导入containers */
 @import './containers/index';
 @import './containers/xxx';
 ```

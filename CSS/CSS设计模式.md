@@ -59,7 +59,7 @@
     - `.size1of2`
     - `.size2of3`
 
-```css
+```scss
 //结构 也叫容器
 .line {
   position:relative;
@@ -97,7 +97,7 @@
 ```
 浮动布局清浮动还可以参考`bootstrap3` 更优雅
 
-```css
+```scss
 .line:before,
 .line:after {
   content: '';
@@ -149,7 +149,7 @@ SMACSS的5大核心分类
 由于中文和英文排版和显示有区别，推荐参考妹子ui的base。<br>
 base文件的规范：该文件只使用`标签选择器`、`标签选择器配伪类`、`*`，`!important`不应该出现在该文件中
 
-```css
+```scss
 *{
     margin:0;
     padding:0;
@@ -204,7 +204,7 @@ a:hover {
 
 常见的有栅格布局，按行和列布局等，可以参考上面OOCSS的Grids栅格布局，只需添加前缀`.l-line`和`.l-unit`。<br>
 还有，由于列表`ul 或 ol`是我们页面中最常用结构，很有必要给这个结构设计一个布局方式。
-```css
+```scss
 .l-list{ 
     margin: 0;
     padding: 0;
@@ -220,7 +220,7 @@ a:hover {
 `.l-list(ul/ol)`、`.l-list-item(li)`比如上面这个浮动布局，这里没有清浮动，还可以用弹性盒子等布局方式。<br>
 
 为避免布局混乱，加强结构的层次，可以采用`子选择器: >`，来强耦合布局和HTML结构
-```css
+```scss
 .l-list{ 
     margin: 0;
     padding: 0;
@@ -260,7 +260,7 @@ a:hover {
 避免使用`id选择器`和`标签选择器`，应该只使用`类选择器`。<br>
 module也即组件，组件应该独立，有自己的命名空间。这个和OOCSS的module一样。<br>
 如一个模态窗：
-```css
+```scss
 .modal{}
 
 .mod-header{}
@@ -320,7 +320,7 @@ module也即组件，组件应该独立，有自己的命名空间。这个和OO
 **Theme**
 
 重写各个组件的基本样式，以达到切换主题的目的
-```css
+```scss
 // in module-name.css
 .mod {
     border: 1px solid;
@@ -339,7 +339,7 @@ module也即组件，组件应该独立，有自己的命名空间。这个和OO
 Block 、 Element 、 Modifier<br>
 块  >> 元素  >> 修饰符<br>
 
-```css
+```scss
 .form { }
 
 .form--theme-xmas { }
@@ -379,7 +379,7 @@ Modifier类似SMACSS的State，由Block名充电前缀，且用`--`分隔符来�
 - `BEM 用于写组件是个很不错的方式，不过类名太长了`
 - `结合三者，OOCSS为基础，按SMACSS划分项目结构，BEM写组件`
 
-```css
+```scss
 .modal{}
 
 .modal > .mod_header{}
