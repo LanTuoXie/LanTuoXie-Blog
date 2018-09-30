@@ -44,7 +44,7 @@ npm run dev
 - `capture-bind`：这个key用来定义捕获阶段，不像web端，我们要兼容IE，只考虑冒泡，因为IE老版本没有捕获
 - `capture-catch`：这个key在触发事件后，终止捕获，由于是`捕获 -> 触发事件 -> 冒泡`，所以终止捕获也终止了冒泡
 
-`bindtap`：在小程序中用`tap`替代`click`，移动端用`tap`是避免点击事件的`300ms`延时造成的bug，`tap`的触发时间更快。   
+`bindtap`：在小程序中用`tap`替代`click`，移动端用`tap`是避免点击事件的`300ms`延时造成的bug，`tap`触发更快。   
 `bind:tap`：这个方式也可以，就是`key:value`方式定义事件，`value`就是`事件名`，其他事件名大多和web端一样
 
 wepy的事件定义：
@@ -181,6 +181,25 @@ dispatch({ type: 'TEST', payload: 1 })
 
 其中组件和页面公用`onLoad`和`onShow`
 
+还要区分三大实例`App实例`、`Page实例`、`Component实例`
+
 ### 组件间通信
 
-小程序的组件间通信和web端的组件是分别的，小程序的组件，两者通信主要通过广播的方式。
+小程序的组件间通信和web端的组件是有分别的，小程序的组件，两者通信主要通过广播的方式。
+
+- `$broadcast`：事件是由父组件发起，所有子组件都会收到此广播事件，除非事件被手动取消
+- `$emit`：事件发起组件的所有祖先组件会依次接收到`$emit`事件
+- `$invoke`：是一个页面或者组件对另一个组件中的方法的直接调用
+
+```js
+
+// 所有在当前页面或者组件中的组件，如果events定义了changeState事件，就会调用其回调函数，以及传入参数
+this.$broadcast('changeState', arg1, arg2, ...)
+
+// 所有在当前组件的父组件或者父页面中，如果events定义了getId事件，就会调用其回调函数，以及 传入参数11
+this.$emit('getId', 11)
+
+// 调用当前页面或者当前组件中的组件AddNumber的方法，方法add定义于methods中，以及传入参数2，相对于AddNumber.methods.add(2)
+this.$invoke('AddNumber', 'add', 2)
+
+```
