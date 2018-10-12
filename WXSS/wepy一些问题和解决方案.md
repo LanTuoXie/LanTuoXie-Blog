@@ -168,3 +168,16 @@ export default class Index extends wepy.page {
 - 使用绝对定位，`/`，在小程序中，`/`是指的当前项目的文件夹，例如：`/pages/index`，这里的首个字符`/`就相当于`@/`都是指向`/src`目录
 - 如果是图片，如`@/assets/icons/logo.png`可以用`/assets/icons/logo.png`，因为第一个字符是`/`就相当于`@/`，表示`/src`目录之下
 - 如果是导航`wx.navigateTo`，如果导航到`/pages/user`，不要使用`/`或者`../`，直接`user`，最终会自动拼成`/pages/user`，也就是说微信默认`/pages/`+`user`
+
+### canvas中的canvas-id不能动态赋值
+
+- 可以通过slot来实现一个组件，不同canvas-id
+
+```js
+  <component-name sid="canvas">
+    <canvas canvas-id="canvas"></canvas>
+  </component-name>
+```
+
+- `component-name`是一个组件，接收sid只要是为了可以`wx.createCanvasContext(this.sid)`
+- 其实我们在组件的内部只需要知道canvas的id，并且调用`wx.createCanvasContext(this.sid)`，所以我们可以把canvas独立成slot
