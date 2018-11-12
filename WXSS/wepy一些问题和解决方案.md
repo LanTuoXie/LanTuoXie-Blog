@@ -20,7 +20,7 @@
 - 由于`constructor`执行时间比较早，所有在这里面的变量，可以直接用于wepy组件，也就是可以和`data`的数据一样用于数据绑定，但是原生组件只能放在`data`中
 - 如果有些数据是一次性的，不会改变的（静态），最好在`constructor`中定义，不要都放到`data`中，`data`中的数据都会被转换成`Observable`数据的
 
-## 组件与组件通信$broadcast、$emit、$invoke
+## 组件与组件通信`$broadcast、$emit、$invoke`
 
 - 这些方法不可以在`constructor`调用，可以在`onLoad`中调用
 - `events`用于定义事件，用于接收用的
@@ -181,3 +181,60 @@ export default class Index extends wepy.page {
 
 - `component-name`是一个组件，接收sid只要是为了可以`wx.createCanvasContext(this.sid)`
 - 其实我们在组件的内部只需要知道canvas的id，并且调用`wx.createCanvasContext(this.sid)`，所以我们可以把canvas独立成slot
+
+### 在一个组件中引入另一个组件作为子组件，子组件的样式`<style>`不起作用
+
+- 是因为父组件没有`<style>`标签，导致子组件不编译`<style>`标签的内容
+- 最好还是每个组件都添加`<style>`标签，即使里面没有内容
+
+### props不推荐传函数
+
+在父组件和子组件间传递信息可以通过传递一个`this`绑定了父组件的函数给子组件，作为`$emit`的时候使用，但是在wepy中，只要是用于绑定模板的数据都会转为`data`的数据    
+但是`data`中wepy是不推荐定义函数的，会报警告。
+
+如何解决这个父组件传递子组件？比如现有一个`BarInput`的`input`组件，父组件要监听这个组件的`oninput和onconfirm`事件，可以这样
+
+```js
+// 父组件
+{
+  evnets: {
+    'bar-input_oninput' (value) {
+      // todo
+    },
+    'bar-input_onconfirm' (value) {
+      // todo
+    }
+  }
+}
+```
+
+```js
+// BarInput 组件
+{
+  methods: {
+    onInput(e) {
+      const value = e.detail.value
+      this.$emit('bar-input_oninput', value)
+    },
+    onConfirm(e) {
+      const value = e.detail.value
+      this.$emit('bar-input_onconfirm', value)
+    }
+  } 
+}
+```
+
+注意上面`events`中的`'bar-input_oninput'`，先以组件名称起头，最后以事件类型结尾，借用参考`BEM`的规范，定义事件名很重要，因为`$emit`是向上一直触发`'bar-input_oninput'`事件，直到最顶端，如果有些事件名称比较简单，几个组件的事件名重名了，会触发该事件，一个唯一又独特的事件名就很有必要了。
+
+父组件传递给子组件可以通过`$broadcast`
+
+### camera组件
+
+- 由于`camera`组件都是小程序中比较特殊的组件，要想使用`z-index`是没什么效果的
+- 要使用`cover-view`组件
+- 使用了`position: absolute`的情况下，这个组件使用`z-index`没效果，在开发中看到可以，但是在真机中不行
+- 如果标签的排列顺序如果在下方，会是最高的z-index，前提是这个组件`position: absolute`设置了这个定位
+- 根据偏移量设置有偏差，特别是底部`bottom: 0`是不会到底部，可以`bottom: -0.1%`，这个组件的定位有偏差，需要`0.1%`
+- 需要根据`position: absolute`定位做一种照相聚焦的效果，这时候要用到`cover-view`，可以做到，但是由于定位有点偏差，需要调调，否则会有一条小黑线
+- 小黑线是定位有误差，2个遮罩板重叠了
+
