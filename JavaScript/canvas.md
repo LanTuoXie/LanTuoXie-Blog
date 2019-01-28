@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# Canvas
+
+=======
 # canvas 画布
 
 canvas基本功能的总结和一些问题解决笔记
@@ -239,3 +243,4 @@ canvas基本功能的总结和一些问题解决笔记
 - 用CSS transforms特性缩放画布：transform可以启动GPU
 - `getContext('2d', { alpha: false })`用于关闭透明度
 - 将绘画的操作步骤封装成函数
+>>>>>>> 2f5e92dc3b2e32dd0f748761bd8569dafb9ca310
