@@ -238,3 +238,4 @@ export default class Index extends wepy.page {
 - 需要根据`position: absolute`定位做一种照相聚焦的效果，这时候要用到`cover-view`，可以做到，但是由于定位有点偏差，需要调调，否则会有一条小黑线
 - 小黑线是定位有误差，2个遮罩板重叠了
 
+### 
