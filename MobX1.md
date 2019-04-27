@@ -8,16 +8,19 @@
 - `Computed Values`：类似Vuex中的getter，getter本质也是computed啦
 - `Reactions`：类似Redux中的connect
 
-#### 核心概念
+### 核心概念
+
 - Observable State (可观察状态)
 - Computed Values (计算值)
 - Reactions (反应)
 - Observer (组件订阅状态)
 
-#### MobX基本操作和要点
+### MobX基本操作和要点
+
 - 定义状态并使其可观察
 - 创建视图以响应状态的变化
 - 更改状态
+
 ```js
 import { observable, observer, action } from 'mobx'
 
@@ -47,14 +50,16 @@ class TimerView extends React.Component {
 
 ```
 
-#### 概念与原则
+### 概念与原则
+
 - State：状态是数据，那个数据会随着时间迁移可能发生改变。也即不同时刻，数据可能拥有不同值（非固定、会变化、可修改的数据）。
 - Derivations：基于某个公式和某个状态而衍生出来的值或者数据，`Computed Values` 和 `Reactions`。黄金法则：如果你想创建一个基于当前状态的值时，请使用`computed`
 - Actions：任何一段可以改变状态的代码。
 
-#### Observable State
+### Observable State
 
 Observable值可以是JS基本数据类型、引用类型、普通对象(不使用构造函数创建的对象如'{}')、类实例、数组和映射。
+
 - `Observable Map`：如果值是ES6的`Map`
 - `Observable Array`：如果值是数组
 - `Observable Object`：如果值是没有原型的对象
@@ -84,7 +89,7 @@ const commonData = observable.box(20)
 commonData.set(25)
 ```
 
-#### Observable Object
+### Observable Object
 
 创建`Observable Object`类型：`obserable.object(props, decorators?, options?)`
 
@@ -93,7 +98,7 @@ commonData.set(25)
 - observable会自动递归地处理整个对象
 - 这里面的普通对象指的是不是使用构造函数创建出来的对象，或者没有原型的对象，简单点就是字面量的对象`{}`。
 
-#### Observable Array
+### Observable Array
 
 创建`Observable Array`类型：`observable.array(values?) 或 observable([])`   
 是否深度递归添加观察：`observable.array(values, { deep: false })`
@@ -114,7 +119,7 @@ commonData.set(25)
 - `remove(value)` 通过值从数组中移除一个单个的项，被移除返回`true`。
 - `peek()`和`slice()`类似，单`peek`不创建保护性拷贝。
 
-#### Observable Maps
+### Observable Maps
 
 创建`Observable Maps`：`observable.map(values?) 或 observable(new Map()) 或 @observable map = new Map()`
 
@@ -143,7 +148,7 @@ MobX自己扩展的
 - `merge(values)` ：合并，`values`可以是普通对象、enteries数组、ES6的Map
 - `replace(values)` : 用提供值替换映射全部内容
 
-#### Boxed Observable
+### Boxed Observable
 
 `observable.box(value)`接收任何值并把值存储到箱子中。使用`get()`可以获取当前值，使用`set(newValue)`可以更新值。 
 
@@ -152,27 +157,28 @@ MobX自己扩展的
 - `intercept(interceptor)`：变化前拦截。
 - `observable(callback:(change) => void, fireImmediately) = false`：注册一个观察者
 
-#### Decorators（装饰器）
+### Decorators（装饰器）
 
-`obserable(data, decorators?, options?)`的decorators    
+`obserable(data, decorators?, options?)`的decorators  
 主要有三部分`observable`、`computed`、`action`
+
 - `observable`：修饰可观察属性是否深克隆、是否自动转换成可观察等
 - `computed`：创建一个计算属性，以及一个怎样的计算属性
 - `action`：创建一个动作，以及一个怎样的动作
 
-**observable**
+#### observable
 
 - `observable.deep 或 observable`：深度可观察性，深度递归地给属性添加观察属性。
 - `observable.ref`：禁用自动的observable转换，只是创建一个observable引用（不观察该属性）。
 - `observable.shallow`：不递归、只能与集合组合使用。将任何分配的集合转换为oibservable，但该集合的值将按原样处理。
 - `observable.struct`：和`ref`效果一样，但会忽略结构上等于当前值得新值。
 
-**computed**
+#### computed
 
 - `computed(options)` ：设置选项
 - `computed.struct` ：只有当前视图产生的值与之前的值结构上有不同时，才通知它的观察者
 
-**action**
+#### action
 
 - `action(name)` ： 创建一个动作，重载名称
 - `action.bound` ：创建一个动作，并将this绑定到了实例
