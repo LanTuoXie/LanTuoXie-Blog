@@ -31,6 +31,11 @@
 
 链表节点：`LinkedListNode`
 
+链表种类：
+
+- 有头有尾的链表：`head`、`tail`、`value`、`next`
+- 无头的链表：`value`、`next`。
+
 ```js
 export default class LinkedListNode {
   constructor(value, next = null) {

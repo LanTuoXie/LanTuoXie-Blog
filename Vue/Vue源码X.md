@@ -89,7 +89,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
 
 ### `./src/core/global-api/extend.js`
 
-这个文件时全局API的`Vue.extend`   
+这个文件时全局API的`Vue.extend`
 用到的一些辅助函数
 
 - `extend`：就是单纯地将另一个对象的第一层赋值给一个新的对象`to[key] = _from[key]`
