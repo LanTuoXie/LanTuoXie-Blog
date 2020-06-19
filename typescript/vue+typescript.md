@@ -12,17 +12,17 @@
 `tsconfig.json` 每个属性解析
 
 - `compilerOptions`：编译选项
-    + `types 或 typeRoots`：可以禁止引入 `node_modules` 下面的 `@types`。
-    + [其他属性](https://www.tslang.cn/docs/handbook/compiler-options.html)
+  - `types 或 typeRoots`：可以禁止引入 `node_modules` 下面的 `@types`。
+  - [其他属性](https://www.tslang.cn/docs/handbook/compiler-options.html)
 - `files`：指定一个包含相对或绝对文件路径的列表。(需要编译那些文件)
-- `includes 或者 exclude`：指定一个文件glob匹配模式列表。（需要编译那些文件）
+- `includes 或者 exclude`：指定一个文件 glob 匹配模式列表。（需要编译那些文件）
 - `extends`：用于继承别的 `tsconfig.json`
 - `compileOnSave`：在保存 `.ts` 文件的时候重新编译。
 
 ## vue typescript 特别库
 
-- `vue-class-component`： vue组件的装饰器。
-- `vue-property-decorator`： vue组件属性装饰器。
+- `vue-class-component`： vue 组件的装饰器。
+- `vue-property-decorator`： vue 组件属性装饰器。
 
 ## 基础类型
 
@@ -30,13 +30,13 @@
 - 数字： `const num: number = 123;`
 - 字符串： `const str: string = 'abc';`
 - 数组： `const arr: number[] = [1, 2, 3];`
-- 元组： `const `
+- 元组： `const`
 - 枚举： `enum { Red = 1, Green, Blue }`
 - Any： `let notSure: any = 4;`
 - void： `const fn = (): void => ()`
 - Null： `let u: null = null;`
 - Undefined: `let un: undefined = undefined;`
-- Never： `const error = (): never => throw new Error('error')`never类型是那些总是会抛出异常或根本就不会有返回值;never类型是任何类型的子类型
+- Never： `const error = (): never => throw new Error('error')`never 类型是那些总是会抛出异常或根本就不会有返回值;never 类型是任何类型的子类型
 - Object
 - 类型断言<>：`(<string>str).length`。类型断言好比其它语言里的类型转换;或者说确保你的执行上下文是这个类型，因为你要查看的属性或者调用的方法要明确是这个数据类型才特有的。比如数组你才特有的方法或者属性，字符串你才特有的方法或者属性。
 
@@ -54,7 +54,7 @@
 - 类
 - 继承
 - 公共-私有-保护 `public` `private` `protected`
-- readonly修饰符
+- readonly 修饰符
 - 存取器 get set
 - 静态属性 static
 - 抽象类 abstract
@@ -65,7 +65,7 @@
 - 函数类型
 - 推断类型-可选参数和默认值
 - 剩余参数
-- this和箭头函数
+- this 和箭头函数
 - 重载
 
 ## 泛型 <T>
@@ -116,21 +116,21 @@
 
 ## interface 扩展 ， 第三方库扩展， 原生属性扩展 ，类的属性扩展
 
-一般默认情况下你要扩展一个interface可以这样子
+一般默认情况下你要扩展一个 interface 可以这样子
 
 ```ts
 interface demo {
-    a: string;
+  a: string;
 }
 
 interface demo {
-    b: string;
+  b: string;
 }
 
-// 最终结果是 
+// 最终结果是
 interface demo {
-    a: string;
-    b: string;
+  a: string;
+  b: string;
 }
 ```
 
@@ -138,19 +138,19 @@ interface demo {
 
 ```ts
 declare module 'vuex' {
-    interface SomeInterface {
-        // 你要扩展的属性
-    }
+  interface SomeInterface {
+    // 你要扩展的属性
+  }
 }
 ```
 
-如果是原生的，默认在 `typescript/lib` 中的。例如如何扩展原生DOM元素 `HTMLElement`
+如果是原生的，默认在 `typescript/lib` 中的。例如如何扩展原生 DOM 元素 `HTMLElement`
 
 ```ts
 declare global {
-    interface HTMLElement {
-        // 你需要扩展的属性
-    }
+  interface HTMLElement {
+    // 你需要扩展的属性
+  }
 }
 ```
 
@@ -171,8 +171,7 @@ console.log(a.x + a.y); // OK
 类加 `namespace + export` 实现扩展
 
 ```ts
-class C {
-}
+class C {}
 // ... elsewhere ...
 namespace C {
   export let x: number;
@@ -186,9 +185,9 @@ let y = C.x; // OK
 // X 是值
 namespace X {
   // Y 是值
-  export interface Y { }
+  export interface Y {}
   // Z 是值
-  export class Z { }
+  export class Z {}
 }
 
 // ... elsewhere ...
@@ -197,7 +196,7 @@ namespace X {
   export var Y: number;
   // 值 Z 和 C
   export namespace Z {
-    export class C { }
+    export class C {}
   }
 }
 
@@ -228,41 +227,44 @@ type X = string;
 组织类型：
 
 使用命名空间组织类型。
+
 ```ts
 declare namespace GreetingLib {
-    interface LogOptions {
-        verbose?: boolean;
-    }
-    interface AlertOptions {
-        modal: boolean;
-        title?: string;
-        color?: string;
-    }
+  interface LogOptions {
+    verbose?: boolean;
+  }
+  interface AlertOptions {
+    modal: boolean;
+    title?: string;
+    color?: string;
+  }
 }
 ```
 
 你也可以在一个声明中创建嵌套的命名空间：
+
 ```ts
 declare namespace GreetingLib.Options {
-    // Refer to via GreetingLib.Options.Log
-    interface Log {
-        verbose?: boolean;
-    }
-    interface Alert {
-        modal: boolean;
-        title?: string;
-        color?: string;
-    }
+  // Refer to via GreetingLib.Options.Log
+  interface Log {
+    verbose?: boolean;
+  }
+  interface Alert {
+    modal: boolean;
+    title?: string;
+    color?: string;
+  }
 }
 ```
 
-定义类: 使用declare class描述一个类或像类一样的对象
+定义类: 使用 declare class 描述一个类或像类一样的对象
+
 ```ts
 declare class Greeter {
-    constructor(greeting: string);
+  constructor(greeting: string);
 
-    greeting: string;
-    showGreeting(): void;
+  greeting: string;
+  showGreeting(): void;
 }
 ```
 
@@ -321,9 +323,9 @@ declare class Greeter {
 
 ```ts
 interface Person {
-    name: string;
-    age: number;
-    address: string;
+  name: string;
+  age: number;
+  address: string;
 }
 
 // 注意： 类型不可以通过索引的方式查看类型，因为它就是一个类型
@@ -336,23 +338,27 @@ type str = '123';
 type num = 123; // str === num 为 false
 
 // type是类型 没有命名空间的概念 而 interface有，interface可以作为命名空间使用
-type person = { name: string, age: number, address: string } // 不可以 person.name
-type person = { name: string, age: 12, address: string } // 匹配 age的时候一定要是2才匹配，且是全等 ===
+type person = { name: string; age: number; address: string }; // 不可以 person.name
+type person = { name: string; age: 12; address: string }; // 匹配 age的时候一定要是2才匹配，且是全等 ===
 
 // 混合方式不同 交叉操作：&  联合操作：|
 type a = { a: 1 };
-type b = { b: 2};
+type b = { b: 2 };
 type c = a & b; // { a: 1, b: 2 }
-type d = '123' | 123 // 只匹配 '123' 或者 123
-type e = string | number // 可以匹配 字符串类型和数字类型
+type d = '123' | 123; // 只匹配 '123' 或者 123
+type e = string | number; // 可以匹配 字符串类型和数字类型
 
-interface d { a: 1 }
-interface d { b: 2 }
+interface d {
+  a: 1;
+}
+interface d {
+  b: 2;
+}
 
 // interface d 等价于
 namespace d {
-    export const a = 1;
-    export const b = 2;
+  export const a = 1;
+  export const b = 2;
 }
 
 // 拥有命名空间的概念 可以使用 索引 d.a d.b 查找类型
@@ -362,6 +368,7 @@ type b = d.b;
 ```
 
 类型映射：
+
 ```ts
 interface map {
     // Person是interface(拥有命名空间的概念)可以通过索引的方式查找类型
@@ -375,9 +382,9 @@ interface map {
 - `in`：用于遍历 `type 联合类型`
 - `typeof`：拿 `值` 的 `类型`
 - `extends`：继承,这里要注意继承的右边是`class`还是`interface` 还是 `联合类型` 还是`单个类型`
-- `T extends U ? X : Y`：如果`T`包含的类型是`U`包含的类型的 '子集'，那么取结果`X`，否则取结果`Y`。比如`type NonNullable<T> = T extends null | undefined ? never : T;`；T如果是`null 或 undefined`那么取`never`。
+- `T extends U ? X : Y`：如果`T`包含的类型是`U`包含的类型的 '子集'，那么取结果`X`，否则取结果`Y`。比如`type NonNullable<T> = T extends null | undefined ? never : T;`；T 如果是`null 或 undefined`那么取`never`。
 - `infer`：表示待推断
 
 ## 引用
 
-- [typescript高级技巧](https://www.baidu.com/link?url=Q18VVGx-DzVzWvL2Fru8N4BX0uxxEHEvMeCuI8bmeYGlyQ8N7IDX22FlJsuP2-szJq0naxmQNSSYe5aWvyBRQKK7ksdMIissi3qtg6SD4oS&wd=&eqid=89be340600007cb5000000065eba6310)
+- [typescript 高级技巧](https://www.baidu.com/link?url=Q18VVGx-DzVzWvL2Fru8N4BX0uxxEHEvMeCuI8bmeYGlyQ8N7IDX22FlJsuP2-szJq0naxmQNSSYe5aWvyBRQKK7ksdMIissi3qtg6SD4oS&wd=&eqid=89be340600007cb5000000065eba6310)
