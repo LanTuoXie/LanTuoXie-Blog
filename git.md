@@ -55,11 +55,32 @@ git remote
 git add .
 git add filename.txt vuefilename.vue
 
-# 
+#
 ```
 
-## 
+## 更新 fork 项目
+
+```bash
+# redux: https://github.com/reduxjs/redux.git
+# fork redux: https://github.com/LanTuoXie/redux.git
+
+# 先将 fork 的项目克隆下来
+git clone https://github.com/LanTuoXie/redux.git
+
+# 创建另一个 remote
+git remote add upstream https://github.com/reduxjs/redux.git
+
+# 将最新的 upstream remote 拉取到本地
+git fetch upstream
+
+# 合并 origin remote 和 upstream remote
+# 一般 clone 下来的 remote 是 origin
+git merge upstream/master
+
+# 将合并后的结果提交到 origin remote 的 master 分支
+git push origin master
+```
 
 ## 引用
 
-- [廖雪峰git教程](https://www.liaoxuefeng.com/wiki/896043488029600/896202780297248)
+- [廖雪峰 git 教程](https://www.liaoxuefeng.com/wiki/896043488029600/896202780297248)
