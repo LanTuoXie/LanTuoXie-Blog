@@ -1,9 +1,9 @@
-## VueX源码分析(4)
+# VueX源码分析(4)
 
 - `/module`
 - `store.js`
 
-#### /module/module.js
+## /module/module.js
 
 ```js
 import { forEachValue } from '../util'
@@ -77,6 +77,7 @@ export default class Module {
 ```
 
 解析：
+
 - `Module`是store模块的类，基本模块的静态属性和一些方法
 - `rawModule`就是我们定义的模块对象`{ namespaced, state, actions, mutations, getters }`
 - `this.state = (typeof rawState === 'function' ? rawState() : rawState) || {}`定义状态可以用函数的方式定义的，这里要先判断状态是不是函数，是函数要执行函数后的值。
@@ -86,12 +87,12 @@ export default class Module {
 - 还有一些遍历的方法但是只有`children、getters、actions、mutations`的遍历，没有`this.state`，那个`update`模块也是，不会更新`state`
 - 更新只更新`namespaced、actions、mutations、getters`
 
-#### /module/module-collection.js
+## /module/module-collection.js
 
 主要类`ModuleCollection`，还有一些辅助函数，先分析辅助函数再分析主要类。
 主要将所有模块合并的类。
 
-**断言函数（只在开发者环境起作用）**
+**断言函数（只在开发者环境起作用）:**
 
 ```js
 const functionAssert = {
@@ -137,10 +138,11 @@ function makeAssertionMessage (path, key, type, value, expected) {
 ```
 
 解析：
+
 - `path`是嵌套模块的名称。如根模块为`[]`，嵌套模块`shop/card`为`['shop', 'card']`。主要功能是模块的寻址路径，可以根据这个路径获取该模块。
 - `makeAssertionMessage(path, key, type, value, expected)`中的`key`就是我们自定义模块的字段：如`state、mutations`等，这个断言就是判断我们定义的字段命是否符合要求。
 
-**ModuleCollection**
+**ModuleCollection:**
 
 ```js
 export default class ModuleCollection {
@@ -228,6 +230,7 @@ function update (path, targetModule, newModule) {
 ```
 
 解析：
+
 - 主要功能是将所有模块合并起来，以及注册和注销所有模块。
 - `register`就是将我们自己定义的对象模块`new Module(自己定义的对象模块)`，这个注册可以递归地注册所有模块，包括嵌套的
 - `unregister`是`module.js`文件中的`delete this._children[key]`是直接调用delete删除

@@ -70,4 +70,3 @@ export default const eventBus = new Vue()
 - `状态提升`：父组件统一管理状态，父组件暴露可以修改状态的`动作Action`给子组件调用。
 
 ## 3、scope-slot的实现原理
-

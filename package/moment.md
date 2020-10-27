@@ -34,4 +34,3 @@ bower install moment --save # bower (废弃)
 - 时长：`moment object`暴露一些方法，让操作者更易获取其内部的`年、月、日`等表示一段时间的值。
 
 ## 一些有用的代码片段
-

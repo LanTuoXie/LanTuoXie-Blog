@@ -1,10 +1,10 @@
-## Vue源码分析(3)
+# Vue源码分析(3)
 
 下面主要研究`./src/core/global-api`这个文件里面的文件。   
 所有自定义数据类型都在`./flow`文件夹，且下面内容用到`./flow/global-api.js`    
 这个文件夹对应[Vue API文档](https://cn.vuejs.org/v2/api/#Vue-component)的`全局API`，最好参考api文档来分析。
 
-### `./flow/global-api.js`
+## `./flow/global-api.js`
 
 ```js
 declare interface GlobalAPI {
@@ -32,7 +32,7 @@ declare interface GlobalAPI {
 
 - 其实就是Vue
 
-### `./core/global-api/assets.js`
+## `./core/global-api/assets.js`
 
 对应Vue API文档的
 
@@ -87,7 +87,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
 - 组件和指令的`definition`可以传对象或者函数，但是filter是只能是函数，这里面没有检测和处理，而是直接添加进入`filters`
 - 这个函数就是全局注册`component、filter、directive`
 
-### `./src/core/global-api/extend.js`
+## `./src/core/global-api/extend.js`
 
 这个文件时全局API的`Vue.extend`
 用到的一些辅助函数

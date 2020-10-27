@@ -1,19 +1,21 @@
-## Element表单验证（1）
+# Element表单验证（1）
 
 > 首先要掌握Element官方那几个表单验证的例子，然后才看下面的教程。
 
 Element主要使用了[async-validator](https://github.com/yiminghe/async-validator#length)这个库作为表单验证
 
 `async-validator`主要分成三部分
+
 - Validate
 - Options
 - Rules
 
 其中，对于我们使用Element的来说，Rules最重要，也是这部分内容较多的。
 
-#### async-validator各部分
+## async-validator各部分
 
-**async-validator基本使用**
+**async-validator基本使用:**
+
 ```js
 import Validator from 'async-validator'
 
@@ -44,25 +46,29 @@ function callback (errors, fileds) {
 validator.validate(source, callback)
 ```
 
-**Validate**
+**Validate:**
 
 就是上面例子中的validator.validate，是一个函数
+
 ```js
 function(source, [options], callback)
 ```
+
 source和callback对应上面的例子。
 
-**Options**
+**Options:**
 
 Options有两个值
+
 - `first`: 一个布尔值，如果出现字段不通过，终止验证后面的字段
 - `firstFields`: 布尔值或者字符串，如果验证一个字段时，一个规则不通过，终止验证下个规则(一个字段，多个规则的情况)
 
 `firstFields`是针对单个字段多规则的情况下使用，而`first`是针对所有字段
 
-**Rules**
+**Rules:**
 
 最重要的还是Rules。定义rule可以有三种形式，但是rules字段名一定要和数据源source的字段名一致。
+
 - 函数的方式：`{ name(rule, value, callback, source, options) {} }`
 - 对象的方式： `{ name: { type: 'string', required: true } }`
 - 数组的方式： `{ name: [{ type: 'string' }, { required: true }] }`
@@ -71,7 +77,7 @@ Options有两个值
 
 除了`type`和`required`还有哪些用法可以用以及有什么用？
 
-#### Rules的默认规则
+## Rules的默认规则
 
 - `type`: 要被验证的数据的类型如`url`和`number`等
 - `required`： 是否必填
@@ -87,7 +93,8 @@ Options有两个值
 - `fields`：Deep Rules的时候使用，定义下一层的字段名以及规则
 - `defaultField`: Deep Rules的时候使用，所有下一层的字段都会采用该规则，可以被`fields`替换
 
-#### 默认的Type
+## 默认的Type
+
 - `string`：必须是String类型，规则不设置type默认是这个
 - `number`：必须是Number类型，如果后台返回的数据是字符串，可以用`transform`转为Number类型，字符串类型的数字（'12'）不会通过，要注意
 - `boolean`: 必须是Boolean类型
@@ -103,7 +110,8 @@ Options有两个值
 - `hex`
 - `email`: String类型，且符合邮箱格式
 
-#### Deep Rules使用demo
+## Deep Rules使用demo
+
 ```js
 cosnt urls = ['http://www.baidu.com', 'http://www.baidu.com']
 // 一个urls的数组，
@@ -137,8 +145,9 @@ const rules = {
 
 ```
 
-#### 自定义验证validator
-`validator(rule, value, callback)`
+## 自定义验证validator
+
+- `validator(rule, value, callback)`
 - `rule`: 记录了验证字段的字段名以及规则的信息
 - `value`: 要验证的值
 - `callback`: 如果`callback()`代表验证通过，如果`callback(new Error('错误要提示的信息'))`代表验证不通过

@@ -1,5 +1,4 @@
-## cnpm 莫名奇妙bug 莫名奇妙的痛
-
+# cnpm 莫名奇妙bug 莫名奇妙的痛
 
 最近想搭建`react@v16` 和 `react-router@v4`，搭建过程打算用vue脚手架webpack模板那套配置方法(webpack3)。
 由于我之前安装的是webpack4，和高版本的webpack-dev-server，Vue那个是webpack3。然后我就直接`cnpm i webpack@3.6.0 webpack-dev-server@2.9.1 -D`，本想着替换版本，然后运行也可以。

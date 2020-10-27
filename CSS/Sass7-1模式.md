@@ -1,10 +1,11 @@
-#Sass 项目结构之7-1模式
+# Sass 项目结构之7-1模式
 
 `7-1模式`的结构：`7个文件夹`，`1个文件`。<br>
 基本上，你需要将所有的部件放进7个不同的文件夹和一个位于根目录的文件（通常用`main.scss`或者`app.scss`）<br>
 编译时会根据`main.scss`引用所有文件夹而形成一个CSS样式表
 
-####7个文件夹
+## 7个文件夹
+
 - `abstracts/`
 - `base/`
 - `components/`
@@ -13,10 +14,12 @@
 - `themes/`
 - `vendors/`
 
-####1个文件
+## 1个文件
+
 - `main.scss`
 
-###Base文件夹
+## Base文件夹
+
 `base/`文件夹存放项目中的模板文件。定义一些HTML元素公认的标准样式。<br>
 比如：[Reset.css](https://meyerweb.com/eric/tools/css/reset/) 和 [normalize.css](http://necolas.github.io/normalize.css/) 等
 
@@ -25,7 +28,8 @@
 - `_typography.scss`
 - `_animations.scss`
 
-###Layout文件夹
+## Layout文件夹
+
 `layout/`文件夹存放构建网站或者应用很小使用到的布局部分。常见的如：
 
 - `_grid.scss`
@@ -35,7 +39,8 @@
 - `_forms.scss`
 - `_navigation.scss`
 
-###Components文件夹
+## Components文件夹
+
 该文件夹包含各类具体模块，基本上是所有的独立模块，划分可以参考一些UI库的来划分，如:
 
 - `_media.scss`
@@ -61,7 +66,8 @@
 
 ---
 
-###Pages文件夹
+## Pages文件夹
+
 存放页面文件，就是那个页面内具有独特的样式，如：
 
 - `_home.scss`
@@ -69,7 +75,8 @@
 
 ---
 
-###Themes文件夹
+## Themes文件夹
+
 主题文件夹，类似`Bootstrap`中的`_variables.scss`文件,存放着整个app的变量，组件的样式值基本引用于该文件。<br>
 只要改变`_variables.scss`中的值，就可以切换一种主题。
 
@@ -79,7 +86,8 @@
 
 ---
 
-###Abstracts文件夹
+## Abstracts文件夹
+
 辅助工具文件夹，可以存放每一个全局变量、函数、混合宏以及占位符。如：<br>
 
 - `_variables.scss`
@@ -92,7 +100,8 @@
 
 ---
 
-###Vendors文件夹
+## Vendors文件夹
+
 外来项目文件夹，存放一些外部库和框架`(Normalize,Bootstrap,jQueryUI等)`
 
 - `_normalize.scss`
@@ -101,10 +110,12 @@
 
 ---
 
-###入口文件
+## 入口文件
+
 主文件，`main.scss`，除`@import`和注释外，该文件不应该包含任何其他代码<br>
 
 为了保持可读性，主文件应遵循如下准则:
+
 - 每个`@import`引用一个文件；
 - 每个`@import`单独一行；
 - 从相同文件夹中引入的文件之间不用空行；
@@ -158,7 +169,8 @@
 
 ---
 
-##总结
+## 总结
+
 `7-1模式`，只供参考，具体怎么搭，最好按项目来。<br>
 如果项目比较小，用`7-1模式`就不必要了，参考`bootstrap`的架构就可以了<br>
 如果项目很大，采用`7-1模式`是个不错的选择。<br>
@@ -166,7 +178,7 @@
 
 ---
 
-##参考资料链接
+## 参考资料链接
 
 - [Sass Guidlines](https://sass-guidelin.es/#options-panel)
 - [中文版(大漠.译)](https://github.com/HugoGiraudel/sass-guidelines/tree/master/pages/zh)

@@ -1,4 +1,4 @@
-##VueX源码分析（1）
+# VueX源码分析（1）
 
 文件架构如下
 
@@ -10,11 +10,11 @@
 - `store.js`
 - `util.js`
 
-#### util.js
+## util.js
 
 先从最简单的工具函数开始。
 
-**find函数**
+**find函数:**
 
 ```js
 /**
@@ -39,10 +39,11 @@ it('find', () => {
 })
 ```
 
-解析：   
+解析：
+
 - 先用`断言函数f`过滤`列表list`，最后取过滤后列表的第一个元素。
 
-**deepCopy函数**
+**deepCopy函数:**
 
 ```js
 /**
@@ -127,7 +128,8 @@ deepCopy的测试用例
   })
 ```
 
-解析：  
+解析：
+
 - 功能：支持循环引用的深克隆函数
 - 第一个if判断`obj === null || typeof obj !== 'object'`判断如果不是引用类型直接返回(基本类型是值拷贝)，也是递归的一个出口。   
 - 第二个判断`hit`是判断是不是循环引用，由于是循环引用，在cache中应该有缓存到一份拷贝，直接取cache的，避免再次重复拷贝一份。
@@ -139,7 +141,7 @@ deepCopy的测试用例
 - 最后`Object.keys`可以遍历对象和数组的所有键名（只返回实例的属性，不包含原型链和Symbol），实现递归克隆。
 - 一共两个出口，一个是基本类型，另一个是循环引用。
 
-**forEachValue**
+**forEachValue:**
 
 ```js
 /**
@@ -151,6 +153,7 @@ export function forEachValue (obj, fn) {
 ```
 
 测试用例
+
 ```js
   it('forEachValue', () => {
     let number = 1
@@ -168,11 +171,12 @@ export function forEachValue (obj, fn) {
   })
 ```
 
-解析：   
+解析：
+
 - 一个遍历对象的函数（支持对象和数组）
 - `fn(value, key)`但是回调函数第一个参数是值，第二个参数是键值
 
-**isObject**
+**isObject:**
 
 ```js
 export function isObject (obj) {
@@ -181,6 +185,7 @@ export function isObject (obj) {
 ```
 
 测试用例
+
 ```js
   it('isObject', () => {
     expect(isObject(1)).toBe(false)
@@ -193,11 +198,12 @@ export function isObject (obj) {
   })
 ```
 
-解析：   
+解析：
+
 - 判断是不是对象，这里没有判断是不是原生对象，数组也是通过的。
 - 由于typeof null === 'object'要先判断是不是null
 
-**isPromise**
+**isPromise:**
 
 ```js
 export function isPromise (val) {
@@ -206,6 +212,7 @@ export function isPromise (val) {
 ```
 
 测试用例
+
 ```js
   it('isPromise', () => {
     const promise = new Promise(() => {}, () => {})
@@ -215,12 +222,13 @@ export function isPromise (val) {
   })
 ```
 
-解析：   
+解析：
+
 - 判断是不是Promise
 - 首先判断val不是undefined，然后才可以判断val.then，避免报错
 - 判断依据是val.then是不是函数
 
-**assert**
+**assert:**
 
 ```js
 export function assert (condition, msg) {
@@ -229,18 +237,21 @@ export function assert (condition, msg) {
 ```
 
 测试用例：
+
 ```js
   it('assert', () => {
     expect(assert.bind(null, false, 'Hello')).toThrowError('[vuex] Hello')
   })
 ```
 
-解析：   
+解析：
+
 - 断言函数，断言不通过抛出一个自定义错误信息的Error
 
-#### `index.js`和`index.esm.js`
+## `index.js`和`index.esm.js`
 
 `index.js`
+
 ```js
 import { Store, install } from './store'
 import { mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers } from './helpers'
@@ -258,8 +269,8 @@ export default {
 
 ```
 
-
 `index.esm.js`
+
 ```js
 import { Store, install } from './store'
 import { mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers } from './helpers'
@@ -287,12 +298,13 @@ export {
 
 ```
 
-解析：   
+解析：
+
 - 区别就是`index.esm.js`比`index.js`多了个一个导入模式
 - `import Vuex, { mapState } from 'index.esm.js'`：有两种方式导入
 - `import Vuex from 'index.js'`：只有一种方式导入
 
-#### mixin.js
+## mixin.js
 
 ```js
 export default function (Vue) {
@@ -331,7 +343,8 @@ export default function (Vue) {
 
 ```
 
-解析：   
+解析：
+
 - 为什么每个组件都拥有$store属性，也即每个组件都能拿到$store
 - Vue2直接用mixin和钩子函数beforeCreate，Vue1用外观（装饰者）模式重写Vue._init函数。
 - `vuexInit`是将全局注册的store注入到当前组件中，在创建该组件之前

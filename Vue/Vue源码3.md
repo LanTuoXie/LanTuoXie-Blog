@@ -1,4 +1,4 @@
-##Vue源码分析(3)
+# Vue源码分析(3)
 
 `src/core/util`文件夹还有3个很重要的文件
 
@@ -6,7 +6,7 @@
 - `props.js`
 - `options.js`
 
-### next-tick.js
+## next-tick.js
 
 ```js
 const callbacks = []
@@ -101,7 +101,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
 - `microTimerFunc`主要使用Promise。如果浏览器不兼容就采用`macroTimerFunc`
 - 由于microtasks队列是在当前evnet loop执行的，所以`nextTick`默认是使用`microTimerFunc`
 
-**withMacroTask**
+**withMacroTask:**
 
 ```js
 /**
@@ -121,7 +121,7 @@ export function withMacroTask (fn: Function): Function {
 - 由于`nextTick`默认是使用的`microTimerFunc`，如果想使用好一点的`macroTimerFunc`
 - 用单例的方式给一个函数添加`_withTash`函数
 
-**nextTick**
+**nextTick:**
 
 ```js
 export function nextTick (cb?: Function, ctx?: Object) {
@@ -187,7 +187,7 @@ export function nextTick (cb?: Function, ctx?: Object) {
 options主要采用了合并策略的方式，这个文件很多函数定义给是合并策略的     
 options是一个很重要的文件，因为平时我们写的组件其实都是在写option，这个解读这个文件可以了解更多的细节
 
-**resolveAsset**
+**resolveAsset：**
 
 ```js
 /**
@@ -228,7 +228,7 @@ export function resolveAsset (
 - 这里会用优先使用原先的id去查看`assets`是否有该属性，有则返回`assets[id]`
 - id不匹配会以驼峰或者单词首字母大写的命名方式去匹配，都不匹配则报警告
 
-**defaultStrat**
+**defaultStrat：**
 
 ```js
 /**
@@ -244,7 +244,7 @@ const defaultStrat = function (parentVal: any, childVal: any): any {
 - 默认的策略是直接替换，不是合并，替换是我之前options有的属性，新的options没有，会被删掉，而合并会保留
 - 合并是旧的options的字段名如果和新的options字段名一样，会被新的替换调，不一样的会保留
 
-**validateComponentName、checkComponents**
+**validateComponentName、checkComponents：**
 
 ```js
 /**
@@ -275,7 +275,7 @@ export function validateComponentName (name: string) {
 
 - 主要是检测定义的组件名是否合法，组件名只能由字母和'-'组成，且不能是HTML的标签名如:`<div>`以及不能是Vue预先定义的组件名：如`<Component>`
 
-**合并策略**
+**合并策略：**
 
 ```js
 /**
@@ -318,7 +318,7 @@ strats拥有的字段名
 
 上面这个都对应一个合并函数，策略保存着所有的合并函数，真正合并的时候只需根据字段名来采用不同的合并方式
 
-**el、propsData**
+**el、propsData:**
 
 ```js
 /**
@@ -339,7 +339,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 - el和propsData采用的是默认的替换方式，el就是字符串，简单的基本数据类型替换即可
 
-**mergeData**
+**mergeData:**
 
 ```js
 /**
@@ -366,7 +366,7 @@ function mergeData (to: Object, from: ?Object): Object {
 - 主要合并两个对象，用于`data`中
 - 由于这些数据是定于`data`中的，要添加`set(to, key, fromVal)`，这些合并是深度合并的
 
-**mergeDataFn**
+**mergeDataFn:**
 
 ```js
 /**
@@ -418,7 +418,7 @@ export function mergeDataOrFn (
 - 考虑到继承的情况这个函数分成2种方式，如果传入`vm`就是继承，使用`mergedInstanceDataFn`否则使用`mergedDataFn`
 - 定于`data`可以是对象也可以是函数，所以在合并之前要先判断data是不是函数，是函数要用函数执行后的值来合并，这里还涉及到mixins，别漏了mixins
 
-**data**
+**data:**
 
 ```js
 strats.data = function (
@@ -446,7 +446,7 @@ strats.data = function (
 
 - 这里定义data的时候，最好使用函数的方式定义，如果在开发环境下使用对象的方式定义，会报上面的警告
 
-**生命周期钩子**
+**生命周期钩子:**
 
 ```js
 /**
@@ -473,7 +473,7 @@ LIFECYCLE_HOOKS.forEach(hook => {
 - 生命周期钩子的合并，是把所有的钩子函数收集与一个数组中，执行钩子的时候，所有钩子函数都会执行
 - 如`{ beforeCreated: [fn1, fn2, fn2, ...] }`
 
-**components、filters、directives**
+**components、filters、directives:**
 
 ```js
 /**
@@ -507,7 +507,7 @@ ASSET_TYPES.forEach(function (type) {
 - `extend`只是把另一个对象的所有属性值赋值给新的对象。如果是引用类型，只是复制一份引用，并不是克隆
 - 由于是`extend`的，如果出现重名的，会被最后的替代
 
-**watch**
+**watch:**
 
 ```js
 /**
@@ -551,7 +551,7 @@ strats.watch = function (
 - watch的key对应的值都是数组，不是数组会自动转换成数组
 - 比如有多个mixin，都定义了一个同名的watch，最后的效果是都会执行
 
-**props、methods、inject、computed、provide**
+**props、methods、inject、computed、provide:**
 
 ```js
 /**
@@ -581,7 +581,7 @@ strats.provide = mergeDataOrFn
 - 除了`provide`其他的都是使用`extend`，`provide`的处理和`data`的一样，`provide要和inject一起使用，效果类似React的context`
 - 由于是`extend`，出现重名的会被替代
 
-**normalizeProps**
+**normalizeProps:**
 
 ```js
 /**
@@ -628,7 +628,7 @@ function normalizeProps (options: Object, vm: ?Component) {
 - `props.name`和`props.age`
 - 最终在程序内部使用的props的key都会格式化成驼峰的格式firstName
 
-**normalizeInject**
+**normalizeInject:**
 
 ```js
 /**
@@ -663,7 +663,7 @@ function normalizeInject (options: Object, vm: ?Component) {
 - 如果是对象，可以重写命名要注入的key或者key是`provide`的key，如果要重写命名，要加`form: keyName`，`keyName`一定存在于`provide`
 - 对象的方式还可以是用默认值`default`，`default`可以是字符串也可以是函数
 
-**normalizeDirectives**
+**normalizeDirectives:**
 
 ```js
 /**
@@ -685,7 +685,7 @@ function normalizeDirectives (options: Object) {
 - 自定义指令有两种方式，一个是对象或者直接函数
 - 这里的意思是，如果定义的是函数，bind和update都使用这个函数
 
-**mergeOptions**
+**mergeOptions:**
 
 ```js
 /**
@@ -744,5 +744,3 @@ export function mergeOptions (
 
 这个文件就是验证用户定义的prop和传入来的prop是否一致，类似React的`propTypes`    
 主要是`validateProp`这个函数的实现
-
-

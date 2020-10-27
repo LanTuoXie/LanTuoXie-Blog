@@ -1,4 +1,4 @@
-## Vue源码observer
+# Vue源码observer
 
 `./observer`文件夹一共有如下文件
 
@@ -31,7 +31,7 @@ export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
 
 接下来的内容由简到难，先从关联性比较低的文件开始分析。
 
-### `array.js`
+## `array.js`
 
 拦截一些原生Array的方法，进行ob，如果改变了，更新依赖
 
@@ -164,7 +164,7 @@ function _traverse (val: any, seen: SimpleSet) {
 - 最主要的还是递归地触发所有`getter`，且支持嵌套引用的情况`seen.has(depId)`，这个递归出口的意思是，这些`getter`已经触发过了，还有避免嵌套引用的死循环（自己引用自己）
 - 在递归引用类型的时候，要考虑的一个出口就是引用类型引用自身
 
-### `dep.js`
+## `dep.js`
 
 ```js
 let uid = 0
@@ -235,7 +235,7 @@ export function popTarget () {
 - 添加的栈结构就是要确保在任何时候，和`Dep`互动，只能有一个`Watcher`，不能有多个
 - 为什么使用栈结构，不使用队列？到要用到这里的时候再说，留个疑念
 
-### `watcher.js`
+## `watcher.js`
 
 根据文件名就知道，这是一个观察者，拥有订阅的功能    
 观察者的功能：

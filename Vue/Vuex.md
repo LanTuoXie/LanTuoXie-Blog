@@ -1,4 +1,5 @@
-#Vuex基本概念
+# Vuex基本概念
+
 - `State`
 - `Getter`
 - `Mutation`
@@ -6,6 +7,7 @@
 - `Module`
 
 简单的Store
+
 ```js
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -28,18 +30,20 @@ console.log(store.state.count);// 1
 
 ```
 
-**常见流程**
+**常见流程：**
 
 `Vue Component` --dispatch--> `Action` <br>
 `Action`  --commit--> `Mutations` <br>
 `Mutations` --mutate-->   `State` <br>
 `State` --render--> `Vue Component` <br>
 
-##State
-**获取vuex中的状态方法**
+## State
+
+**获取vuex中的状态方法：**
 
 在`计算属性:computed`中返回某个状态，要获取Vuex那个状态，要在`computed`中定义<br>
 由于在全局使用了`Vue.use(Vuex)`，所有组件可以通过`this.$store`拿到Vuex的`store`<br>
+
 ```js
 const Counter = {
   template: `<div>{{count}}</div>`,
@@ -50,14 +54,17 @@ const Counter = {
   }
 }
 ```
+
 由于`computed的属性是函数`，那么在返回状态之前，还有更多操作的空间。
 
-**mapState辅助函数**
+**mapState辅助函数：**
+
 ```js
 import {mapState} from 'vuex'
 ```
 
 `mapState`辅助函数接收一个`对象`或者一个`字符串数组`，返回`计算属性:computed`<br>
+
 ```js
 //这个可以单独放在一个文件中，重复使用
 const vuexComputed = mapState({
@@ -79,6 +86,7 @@ const vuexComputed = mapState({
 
 然后将mapState生成的vuexComputed和Vue组件实例的computed合并<br>
 使用对象展开运算符`...`
+
 ```js
 {
   //...某个组件
@@ -92,11 +100,13 @@ const vuexComputed = mapState({
 ```
 
 如果状态都只是单纯的显示，可以传一个`字符串数组`给`mapState`
+
 ```js
 const vuexComputed = mapState(['count']);
 ```
 
 完整的demo:
+
 ```js
 //main.js
 import Vue from 'vue'
@@ -172,12 +182,14 @@ export default {
 }
 ```
 
-##Getter
+## Getter
+
 `Getter`和`计算属性:computed`功能一样，只不过，它是`store`的，也会缓存计算的值。<br>
 
-**组件中拿到getter**
+**组件中拿到getter：**
 
 `Getter`会暴露`store.getters`对象。
+
 ```js
 const store = new Vuex.Store({
   state: {
@@ -209,6 +221,7 @@ const store = new Vuex.Store({
 ```
 
 在定义`getter`时，有两个参数传入`state`、`getters`
+
 ```js
 getters: {
   get6: state => state.arr.filter(num => num === 6),
@@ -218,7 +231,8 @@ getters: {
 }
 ```
 
-**定义getter方法**
+**定义getter方法：**
+
 ```js
 //要使用函数要封装2层函数以上，在组件中拿到getTodoById时，默认执行第一层
 getters: {
@@ -228,7 +242,7 @@ getters: {
 store.getters.getTodoById(2)
 ```
 
-**mapGetters**
+**mapGetters：**
 功能：将`store`中的`getter`映射到局部的计算属性`computed`中<br>
 和`mapState`类似，支持传入`对象`或者`字符串数组`，不过只能获取，不能重写，或者定义<br>
 
@@ -272,9 +286,11 @@ export default {
 }
 ```
 
-##Mutation
+## Mutation
+
 修改`Vuex`的`store`中的状态的唯一方式是`commit mutation`。<br>
 每个`mutation`都有一个字符串的**事件类型(type)**和一个**回调函数(handler)**<br>
+
 ```js
 const store = new Vuex.Store({
   state: {
@@ -294,7 +310,8 @@ const store = new Vuex.Store({
 store.commit('increment')
 ```
 
-**Payload**
+**Payload：**
+
 ```js
 mutations: {
   increment (state, n) {
@@ -305,14 +322,17 @@ store.commit('increment', 10)
 ```
 
 `store.commit`可以支持`多参数模式`，或者`一个对象模式`
+
 ```js
 store.commit({
   type: 'increment',
   amount: 10
 })
 ```
+
 其中`一个对象模式`和`redux`很像<br>
 而且事件类型type也可以使用常量来替代
+
 ```js
 // mutation-types.js
 export const SOME_MUTATION = 'SOME_MUTATION';
@@ -332,11 +352,12 @@ const store = new Vuex.Store({
 })
 ```
 
-**组件中提交mutation**
+**组件中提交mutation：**
 
 在组件中可以通过`this.$store.commit('xxx')`提交`mutation`<br>
 还有就是使用`mapMutations`辅助函数，不过这次不是映射到计算属性，而是`methods`<br>
 使用方式和`mapGetters`一模一样
+
 ```js
 import { mapMutations } from 'vuex';
 
@@ -352,13 +373,16 @@ export default {
 
 ```
 
-**Mutation 和 Reduce**
+**Mutation 和 Reduce：**
 
 `Reduce`的基本形式
+
 ```js
 (state, Action) => newState || state
 ```
+
 转化为`Mutation`，那么
+
 ```js
 const Action = {
   type: 'increment',
@@ -385,10 +409,12 @@ export default (state = initState, Action) => {
 在`mutation`中改变状态:<br>
 `store.commit('increment', playload) -> mutations['increment'](state, playload) -> newState -> render view`
 
-##Action
+## Action
+
 一般`Action`可以处理异步任务，而`Mutation`必须只能同步。<br>
 在异步流程中，先异步获得所需的数据，然后将返回的数据组合成`Action`。<br>
 在生成`Action`之前，有个`createAction函数`。
+
 ```js
 //Redux 思维的Action
 const createAction = async (url) => {
@@ -414,7 +440,8 @@ store.commit(Action)
 在`Redux`中，`dispatch`分发的直接是`action`<br>
 在`Vuex`中，`dispatch`分发的是`createAction或者mutation`，之后再`commit action`<br>
 
-**Action 不同于 Mutation**
+**Action 不同于 Mutation：**
+
 - Action提交的是mutation,而不是直接变更状态
 - Action可以包含任意异步操作
 
@@ -435,20 +462,24 @@ const store = new Vuex.Store({
   }
 })
 ```
+
 Action函数接受一个与`store实例`具有相同方法和属性的`context对象`<br>
 其中`context`不是`store实例`
 
-**分发Action**
+**分发Action：**
+
 ```js
 store.dispatch('increment')
 ```
 
-**组件中分发Action**
+**组件中分发Action:**
+
 组件中使用`this.$store.dispatch('xxx')`<br>
 或者使用`mapActions`辅助函数将`actions`映射到`methods`中
 
-**组合Action**
+**组合Action：**
 `dispatch`函数在结束后返回一个`Promise`
+
 ```js
 actions: {
   actionA ({ commit }) {
@@ -462,10 +493,12 @@ actions: {
 }
 ```
 
-##Module
+## Module
+
 可以将`store`分割成`模块Module`<br>
 每个模块拥有自己的State、Mutation、Action、Getter<br>
 然后将所有模块组合成一个，就形成了一个状态树。
+
 ```js
 //一般我们可以按页面或者功能模块来划分模块
 //大型项目可以按一个大模块划分
@@ -498,13 +531,13 @@ store.state.a // -> pageA 的状态
 store.state.b // -> pageAB 的状态
 ```
 
-**模块的局部状态**
+**模块的局部状态:**
 
 每个模块的`state`都是局部状态，模块中的`getter`、`mutation`、传进来的`state`都是局部的<br>
 而`action`可以通过`context.state`拿到局部的状态,`context.rootState`拿到全局的<br>
 不同于`mutation`，`getter`也可以拿到全局状态，`getter的第三个参数rootState`
 
-**命名空间**
+**命名空间:**
 
 默认情况下，模块内部的action、mutation和getter是注册在全局命名空间的--多个模块对同一mutation或action作出响应<br>
 `多个模块对同一mutation或action作出响应`，类似一个事件拥有多个处理程序（观察者模式）<br>
@@ -514,6 +547,7 @@ store.state.b // -> pageAB 的状态
 添加命名空间后的`action context : getters访问局部的 rootGetters访问全局的`<br>
 
 如果添加了命名空间，但是还是想暴露某个`action`或`getter`为全局，使用`root:true`
+
 ```js
 {
   actions: {
@@ -554,6 +588,7 @@ methods: {
 ```
 
 还可以使用`createNamespacedHelpers`来绑定命名空间值，类似`bind(context)`<br>
+
 ```js
 import { createNamespacedHelpers } from 'vuex';
 
@@ -577,7 +612,8 @@ export default {
 }
 ```
 
-**模块动态注册**
+**模块动态注册:**
+
 ```js
 // 注册模块 `myModule`
 store.registerModule('myModule', {
@@ -592,9 +628,10 @@ store.registerModule(['nested', 'myModule'], {
  store.unregisterModule('myModule')
 ```
 
-**应用**
+**应用:**
 
 如果是小型应用，可以按页面来分模块
+
 ```js
 //pagea.js
 export default {
@@ -612,6 +649,7 @@ export default {
 ```
 
 然后用一个文件引进所有模块，且全部暴露`export`
+
 ```js
 //modules.js
 import pageA from './pagea.js'
@@ -629,6 +667,7 @@ export default {
 ```
 
 最后在`main.js`引入
+
 ```js
 //main.js
 import modules from './modules/modules'
@@ -642,7 +681,7 @@ const store = new Vuex.Store({
   actions: {},
   //模块
   modules
-}) 
+})
 ```
 
 ```js
@@ -652,4 +691,3 @@ this.$store.state.pageB
 this.$store.state.pageC
 this.$store.state.pageD
 ```
-

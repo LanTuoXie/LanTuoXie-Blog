@@ -15,7 +15,7 @@ class MyNumbers:
   def __iter__(self):
     self.a = 1
     return self
- 
+
   def __next__(self):
     if self.a <= 20:
       x = self.a
@@ -23,7 +23,6 @@ class MyNumbers:
       return x
     else:
       raise StopIteration
-
 ```
 
 ## 迭代器 `iter()` `next()`
@@ -32,7 +31,7 @@ class MyNumbers:
 - `next()`： 是执行迭代器
 - `StopIteration`： 是迭代器的完成点标识
 
-## 生成器 
+## 生成器
 
 - 在 Python 中，使用了 `yield` 的函数被称为生成器 `generator`。更简单点理解生成器就是一个迭代器。调用一个生成器函数，返回的是一个迭代器对象。
 

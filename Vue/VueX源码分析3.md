@@ -1,11 +1,12 @@
-## VueX源码分析（3）
+# VueX源码分析（3）
 
 还剩余
+
 - `/module`
 - `/plugins`
 - `store.js`
 
-#### /plugins/devtool.js
+## /plugins/devtool.js
 
 ```js
 const devtoolHook =
@@ -32,9 +33,9 @@ export default function devtoolPlugin (store) {
 
 - 浏览器开发者工具支持监控VueX
 
-#### /plugins/logger.js
+## /plugins/logger.js
 
-**repeat**
+**repeat:**
 
 ```js
 function repeat (str, times) {
@@ -43,9 +44,10 @@ function repeat (str, times) {
 ```
 
 解析：
+
 - 字符串重复几次repeat('0', 5)会返回'00000'
 
-**pad**
+**pad:**
 
 ```js
 function pad (num, maxLength) {
@@ -54,9 +56,10 @@ function pad (num, maxLength) {
 ```
 
 解析：
+
 - 给数字补零，如pad(5, 5) 会返回'000005'
 
-**createLogger**
+**createLogger:**
 
 ```js
 import { deepCopy } from '../util'

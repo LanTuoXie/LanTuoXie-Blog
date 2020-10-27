@@ -1,18 +1,19 @@
-## Vue源码分析(1)
+# Vue源码分析(1)
 
-源码很多用到Flow    
-因为Vue涉及到多个平台以及服务端渲染，这里只分析Web端的。    
+源码很多用到Flow
+因为Vue涉及到多个平台以及服务端渲染，这里只分析Web端的。
+
 - web
 - weex
 - server
 
 先简后难，先从工具库入手
 
-### ./src/shared
+## ./src/shared
 
 这个文件夹的文件是所有都共享的，比较简单，先从这里面入手
 
-#### ./src/shared/constants.js
+### ./src/shared/constants.js
 
 ```js
 export const SSR_ATTR = 'data-server-rendered'
@@ -42,13 +43,13 @@ export const LIFECYCLE_HOOKS = [
 - 所有生命周期的钩子以及资源类型
 - 注意加多了三个生命周期钩子`activated`、`deactivated`、`errorCaptured`
 
-#### ./src/shared/util.js
+### ./src/shared/util.js
 
 一些常用且很有用的工具函数
 
 > 注意：很多地方使用flow
 
-**emptyObject**
+**emptyObject:**
 
 ```js
 export const emptyObject = Object.freeze({})
@@ -57,7 +58,7 @@ export const emptyObject = Object.freeze({})
 - 空对象，`Object.freeze()`只能查看，不可以修改
 - 还有一种是`Object.create(null)`
 
-**isUndef、isDef、isTrue、isFalse**
+**isUndef、isDef、isTrue、isFalse:**
 
 ```js
 // these helpers produces better vm code in JS engines due to their
@@ -83,7 +84,7 @@ export function isFalse (v: any): boolean %checks {
 - `isDef`是否定义
 - `isTrue、isFalse`主要判断是不是Boolean值且是`true`还是`false`。有种情况是`'true'`、`'false'`它们转换成布尔值都是`true`
 
-**isPrimitive**
+**isPrimitive:**
 
 ```js
 /**
@@ -102,7 +103,7 @@ export function isPrimitive (value: any): boolean %checks {
 
 - 判断是不是基本类型值`String`、`Number`、`Boolean`还有ES6的`Symbol`
 
-**isObject**
+**isObject:**
 
 ```js
 /**
@@ -117,7 +118,7 @@ export function isObject (obj: mixed): boolean %checks {
 
 - 很参见的判断是不是对象，先判断是不是`null`然后再根据`typeof`判断是不是对象
 
-**_toString、toRawType**
+**_toString、toRawType:**
 
 ```js
 /**
@@ -133,7 +134,7 @@ export function toRawType (value: any): string {
 - 根据`toString`返回的`'[object Type]'`来判断`引用类型`，是比较可靠的，很多库都用到
 - `toRawType`返回的是`'[object Object]'`的`'Object'`
 
-**isPlainObject、isRegExp**
+**isPlainObject、isRegExp:**
 
 ```js
 /**
@@ -152,7 +153,7 @@ export function isRegExp (v: any): boolean {
 - `isPlainObject`：通过`toString`严格判断是不是对象`Object`
 - `isRegExp`：通过`toString`严格判断是不是`RegExp`
 
-**isValidArrayIndex**
+**isValidArrayIndex:**
 
 ```js
 /**
@@ -167,7 +168,7 @@ export function isValidArrayIndex (val: any): boolean {
 - 是不是合法的数组索引
 - 索引要求是大于0的正整数且不能超过有限值，所以要通过`isFinite`来判断是不是有限值
 
-**toString**
+**toString:**
 
 ```js
 /**
@@ -186,7 +187,7 @@ export function toString (val: any): string {
 - 将引用类型转为字符串，用的JSON.stringify，`JSON.stringify(val, null, 2)`中的2代表字段名的缩进，缩进2个space
 - 基本类型值直接`String(val)`
 
-**toNumber**
+**toNumber:**
 
 ```js
 /**
@@ -204,7 +205,7 @@ export function toNumber (val: string): number | string {
 - `isNaN(n)`判断是否转化成功，成功用转化后的值（已经转为Number类型了），失败直接返回原来的值
 - 这个技巧用于判断一个字符串是否符合数字类型规范很有用，或者这个字符串能否转为Number类型
 
-**makeMap**
+**makeMap:**
 
 ```js
 /**
@@ -231,7 +232,7 @@ export function makeMap (
 - 主要创建这个判断函数`key => map(key)`，map存于闭包中，且map中的key由`str`来生成，如果`str`是`a,b,c,d`就会创建这样的map`{a: true, b: true, c: true, d: true}`
 - `expectsLowerCase`主要用于生成的map的key是否区分大小写，为真则不区分大小写，为假则区分（不传参数，默认值）
 
-**isBuiltInTag、isReservedAttribute**
+**isBuiltInTag、isReservedAttribute:**
 
 ```js
 /**
@@ -250,7 +251,7 @@ export const isReservedAttribute = makeMap('key,ref,slot,slot-scope,is')
 - 两个判断函数都是，都是与操作，只要符合任何一个key都返回true
 - 也可以知道`key、ref、slot、slot-scope、is`是预设值，也即设置了这些属性的值，就有预设的功能，一共5个预设值属性，笔记
 
-**remove**
+**remove:**
 
 ```js
 /**
@@ -270,7 +271,7 @@ export function remove (arr: Array<any>, item: any): Array<any> | void {
 - splice会改变原来的数组，且返回移除的那个元素
 - 这里还判断了数组的长度，长度为0的返回undefined
 
-**hasOwnProperty**
+**hasOwnProperty:**
 
 ```js
 /**
@@ -286,7 +287,7 @@ export function hasOwn (obj: Object | Array<*>, key: string): boolean {
 - hasOwnProperty是判断对象实例的可遍历的属性，不判断原型链的，也用于过滤原型链的属性
 - `[].hasOwnProperty('slice')`是返回`false`的，`slice`是在原型链中的
 
-**cached**
+**cached:**
 
 ```js
 /**
@@ -306,7 +307,7 @@ export function cached<F: Function> (fn: F): F {
 - 主要功能是：缓存一个函数`fn`的运行结果，下次跑的时候，如果有缓存就不用再执行一次`fn`，直接取缓存的结果
 - 注意：这个函数没有设计缓存区大小限制，还有`fn`要求是纯函数
 
-**camelizeRE、capitalize、hyphenateRE**
+**camelizeRE、capitalize、hyphenateRE:**
 
 ```js
 /**
@@ -338,7 +339,7 @@ export const hyphenate = cached((str: string): string => {
 - `capitalize`：将字符串第一个字符转为大写
 - `hyphenateRE`正好和`camelize`相反，是把`N`转为`-n`
 
-**polyfillBind、nativeBind、bind**
+**polyfillBind、nativeBind、bind:**
 
 ```js
 /**
@@ -377,7 +378,7 @@ export const bind = Function.prototype.bind
 - `nativeBind`：原生的bind函数，也是单纯的绑定this，不处理柯里化
 - `bind`：就是`polyfillBind`和`nativeBind`的合体，适配模式，向下兼容
 
-**toArray**
+**toArray:**
 
 ```js
 /**
@@ -396,7 +397,7 @@ export function toArray (list: any, start?: number): Array<any> {
 
 - 就是`Array.from`，将类数组的对象转为真数组，但是这个支持索引切割的方式转化，只有一个切割浮标
 
-**extend**
+**extend:**
 
 ```js
 /**
@@ -412,7 +413,7 @@ export function extend (to: Object, _from: ?Object): Object {
 
 - 将一个对象的属性混合到目标对象上，如果属性是引用类型，修改原来的对象，会影响混合后的对象
 
-**toObject**
+**toObject:**
 
 ```js
 /**
@@ -432,7 +433,7 @@ export function toObject (arr: Array<any>): Object {
 - 讲所有元素都是对象的数组中的元素从左到右，开始混合成一个对象
 - `[{ name: 'a' }, { age: 12 }, { spc: '帅' }, { name: 'MyDuty' }]` 变成`{ name: 'MyDuty', age: 12, spc: '帅' }`
 
-**noop、no、identity**
+**noop、no、identity:**
 
 ```js
 /**
@@ -458,9 +459,10 @@ export const identity = (_: any) => _
 - `identity`是一个输入什么就返回什么的函数，用于验证是否纯函数，还可以`[1, 2, 3].map(identity)`就可以克隆一个一模一样的数组
 - 这个三个函数用于函数式编程中很有用，多留意
 
-**genStaticKeys**
+**genStaticKeys:**
 
 由于vue是使用的flow类型系统，所有自定义的类型在`./flow`文件夹，这个函数用到`./flow/compiler.js`中的`ModuleOptions`类型
+
 ```js
 declare type ModuleOptions = {
   // transform an AST node before any attributes are processed
@@ -492,7 +494,7 @@ export function genStaticKeys (modules: Array<ModuleOptions>): string {
 - 主要是处理模块的`staticKeys`，而`staticKeys?: Array<string>; // AST properties to be considered static`
 - 合并所有模块中的`staticKey`成一个数组，然后用`','`分隔开
 
-**looseEqual**
+**looseEqual:**
 
 ```js
 /**
@@ -541,7 +543,7 @@ export function looseEqual (a: any, b: any): boolean {
 - 都是对象：比较两个对象的键值，不等才遍历递归每个键的值，这里用了Object.keys，这个不包含原型链和Symbol，且要求是可遍历的属性，所以是浅相等判断
 - 最主要的是：如何判断两个数组是否相等和两个对象是否相等，值得注意的是`NaN === NaN`，优先判断引用类型的结构是否相等，不等才深入判断值是否相等
 
-**looseIndexOf**
+**looseIndexOf:**
 
 ```js
 export function looseIndexOf (arr: Array<mixed>, val: mixed): number {
@@ -554,7 +556,7 @@ export function looseIndexOf (arr: Array<mixed>, val: mixed): number {
 
 - 使用`looseEqual`来比较相等，返回数组的index也即是`const arr = [{}, undefined, { name: 'a' }]`使用`looseIndexOf(arr, { name: 'a' })`返回`2`
 
-**once**
+**once:**
 
 ```js
 /**

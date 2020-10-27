@@ -1,4 +1,4 @@
-##VueX源码分析(5)
+# VueX源码分析(5)
 
 最终也是最重要的`store.js`，该文件主要涉及的内容如下：
 
@@ -18,7 +18,7 @@
 - install函数
 - `let Vue`上面这些和`这个Vue`都在同一个作用域
 
-**install**
+**install:**
 
 ```js
 export function install (_Vue) {
@@ -36,10 +36,11 @@ export function install (_Vue) {
 ```
 
 解析：
+
 - 主要是让所有组件都能拿到store,在组件生命周期`beforeCreate`期间给所有组件创建`$store`
 - 如果是开发环境还会判断是否使用`Vue.use(Vuex)`
 
-**unifyObjectStyle**
+**unifyObjectStyle:**
 
 ```js
 function unifyObjectStyle (type, payload, options) {
@@ -58,11 +59,12 @@ function unifyObjectStyle (type, payload, options) {
 ```
 
 解析：
+
 - 主要处理`dispatch('pushTab', payload, options)` 和 `dispatch({ type: 'pushTab', payload }, options)`这种情况
 - 也即第一个参数可以是字符串，也可以是对象，就是由第一个参数决定采用什么样的方式传参。这个函数的目的就是支持不同风格的传参
 - 传参风格（方式），由传入的第一个参数类型决定
 
-**getNestedState**
+**getNestedState:**
 
 ```js
 function getNestedState (state, path) {
@@ -73,11 +75,12 @@ function getNestedState (state, path) {
 ```
 
 解析：
+
 - 和之前模块module中的path一样，path为空数组`[]`为非嵌套或根模块，`{ shop: { card: { item: 1 } } }`的path为`['shop', 'card', 'item']`
 - 就是通过迭代的方式获取状态`item`
 - 这样做的好处是：对象和数组都支持，如果是数组`[{ name: 'getMe' }, { name: 'notMe' }]`，要获取`'getMe'`那么`const path = [0, 'name']`
 
-**enableStrictMode**
+**enableStrictMode:**
 
 ```js
 function enableStrictMode (store) {
@@ -90,12 +93,13 @@ function enableStrictMode (store) {
 ```
 
 解析：
+
 - `$watch`就是`Vue.$watch`，主要功能是：如果启动了严格模式，监控数据状态的改变是不是通过`commit`改变的。
 - 如果不是通过`commit`改变状态的，在开发模式下会提示。
 - `VueX`的状态是存在于一个`Vue实例中的_data.$$state`，`Store._vm`可以解释`VueX`为什么叫`VueX`
 - 可以说`VueX`是`Vue的一个实例`
 
-**genericSubscribe**
+**genericSubscribe:**
 
 ```js
 function genericSubscribe (fn, subs) {
@@ -112,12 +116,14 @@ function genericSubscribe (fn, subs) {
 ```
 
 解析：
+
 - 订阅某个观察者，这里面`subs`是观察者，`subs`关联到某个状态，那个状态改变，会遍历`subs`调用里面的函数。
 - 返回的函数时可以取消订阅的，也即`const unsubscribe = genericSubscribe(fn, subs)`，调用`unsubscribe()`就可以取消订阅
 
-#### class Store
+## class Store
 
 几个辅助函数和状态相关
+
 - resetStore：重置状态，类似重新开始游戏，会重新创建Store
 - resetStoreVM：Vuex的状态是存放在这个Vue实例的_data中
 - installModule：安装模块，注册模块
@@ -335,6 +341,7 @@ export class Store {
 - 将全局（非模块内）的`dispatch和commit`的`this`绑定到`store`
 
 Store类的静态属性
+
 - `_committing`：记录当前是否commit中
 - `_actions`：记录所有action的字段，有模块作用域的用'/'分隔
 - `_actionSubscribers`：全局的dispatch后遍历调用数组中的函数
@@ -348,7 +355,7 @@ Store类的静态属性
 - `state`：Store的所有state包含模块的
 - `_vm`：Vue的实例，`VueX`真正状态是存于这里`Store._vm._data.$$state`
 
-**installModule**
+**installModule:**
 
 ```js
 function installModule (store, rootState, path, module, hot) {
@@ -398,7 +405,7 @@ function installModule (store, rootState, path, module, hot) {
 - `Vue.set(parentState, moduleName, module.state)`由于`VueX`是Vue的实例，Vue设置的状态，它的实例(VueX)可以继承
 - 创建每个模块的`context`
 
-**makeLocalContext**
+**makeLocalContext:**
 
 ```js
 /**
@@ -466,7 +473,7 @@ function makeLocalContext (store, namespace, path) {
 - 懒获取就是把原本的操作封装成函数，在需要的时候调用该函数即可获得。实际上就是宏命令或者叫命令模式，用一个函数把一块要执行的命令封装起来。
 - `() => fn()`要留意的是：是`fn()`而不是`fn`，`fn()`才是`要执行的命令`
 
-**makeLocalGetters**
+**makeLocalGetters:**
 
 ```js
 function makeLocalGetters (store, namespace) {
@@ -496,7 +503,7 @@ function makeLocalGetters (store, namespace) {
 - 先判断有没有匹配的作用域（getter = namespace + getterName），然后取出getter的名称        
 - 通过代理的方式返回这个getter
 
-**resetStoreVM**
+**resetStoreVM:**
 
 ```js
 function resetStoreVM (store, state, hot) {
@@ -553,7 +560,7 @@ function resetStoreVM (store, state, hot) {
 - （数据劫持+懒调用）和computed就是getter的实现原理，也是为什么getter有缓存的效果
 - 这个computed是`VueX`内部的`_vm`的，也可以认为就是getters
 
-**registerMutation**
+**registerMutation:**
 
 ```js
 function registerMutation (store, type, handler, local) {
@@ -568,7 +575,7 @@ function registerMutation (store, type, handler, local) {
 - local.state如果有命名空间使用命名空间的，没有使用全局的
 - `store._mutations[type]`，type就是命名空间，按命名空间来存放mutations
 
-**registerAction**
+**registerAction:**
 
 ```js
 function registerAction (store, type, handler, local) {
@@ -602,7 +609,7 @@ function registerAction (store, type, handler, local) {
 - `{ dispatch, commit, getters, state }`是局部local的
 - 运行后的结果是返回一个Promise
 
-**registerGetter**
+**registerGetter:**
 
 ```js
 function registerGetter (store, type, rawGetter, local) {
@@ -627,7 +634,7 @@ function registerGetter (store, type, rawGetter, local) {
 - 键值还是根据命名空间来生成
 - 传入四个参数(local.state, local.getters, store.state, store.getters)；有命名空间，前面2个参数就是命名空间的，没有命名空间前面2个参数就是全局的
 
-**resetStore**
+**resetStore:**
 
 ```js
 function resetStore (store, hot) {
@@ -646,9 +653,9 @@ function resetStore (store, hot) {
 - 这个会重新创建Store，整体的，整体替换旧的Store
 - 重新`installModule`和`resetStoreVM`
 
-#### class Store 的方法
+## class Store 的方法
 
-**state()**
+**state():**
 
 ```js
   get state () {
@@ -665,7 +672,7 @@ function resetStore (store, hot) {
 - 获取的state是直接从`store._vm._data.$$state`中获取
 - 不可以直接设置state
 
-**replaceState**
+**replaceState:**
 
 ```js
   replaceState (state) {
@@ -677,7 +684,7 @@ function resetStore (store, hot) {
 
 - 替换状态是直接替换`store._vm._data.$$state`
 
-**commit**
+**commit:**
 
 ```js
   commit (_type, _payload, _options) {
@@ -718,7 +725,7 @@ function resetStore (store, hot) {
 - 全局的`commit`，由于`_mutations`存储的是所有的`type`（包括模块的），这个commit可以`commit('shop/card')`只要命名路径对
 - 调用完后，会发布`_subscribers`，遍历该数组调用回调
 
-**dispatch**
+**dispatch:**
 
 ```js
   dispatch (_type, _payload) {
@@ -750,7 +757,7 @@ function resetStore (store, hot) {
 - `_actions[type]`是一个数组，可以一个`type`不同处理，也即`_actions[type] = [fn1, fn2, fn3, ...]`
 - 如果出现一个type多个处理，就用`Promise.all`等到所有函数都调用完才统一处理（支持异步）
 
-**subscribe**
+**subscribe:**
 
 ```js
   subscribe (fn) {
@@ -760,7 +767,7 @@ function resetStore (store, hot) {
 
 - 订阅`commit`，只要调用全局的`commit`就调用，模块内的`context.commit`也是会调用全部的`commit`
 
-**subscribeAction**
+**subscribeAction:**
 
 ```js
   subscribeAction (fn) {
@@ -770,7 +777,7 @@ function resetStore (store, hot) {
 
 - 订阅`action`，只要调用全局的`action`就调用，模块内的`context.dispatch`也是会调用全部的`dispatch`
 
-**watch**
+**watch:**
 
 ```js
   watch (getter, cb, options) {
@@ -784,13 +791,13 @@ function resetStore (store, hot) {
 - 借用`Vue`的`$watch`，观察想要监控的状态
 - 用这个函数就相当于创建一个getter，不同时可动态创建
 
-#### 动态模块
+## 动态模块
 
 - `registerModule`
 - `unregisterModule`
 - `hotUpdate`
 
-**registerModule**
+**registerModule:**
 
 ```js
   registerModule (path, rawModule, options = {}) {
@@ -812,7 +819,7 @@ function resetStore (store, hot) {
 - 注册一个模块会重新创建`Store`和`store._vm`
 - `installModule` 和 `resetStoreVM`这两个函数很总要，涉及到性能，重点、重点
 
-**unregisterModule**
+**unregisterModule:**
 
 ```js
   unregisterModule (path) {
@@ -835,7 +842,7 @@ function resetStore (store, hot) {
 - `Vue.delete(parentState, path[path.length - 1])`和`resetStore(this)`
 - 还是会重新创建`Store`和`_vm`
 
-**hotUpdate**
+**hotUpdate:**
 
 ```js
   hotUpdate (newOptions) {
@@ -847,7 +854,7 @@ function resetStore (store, hot) {
 - 更新模块
 - `resetStore(this, true)`，还是会重新创建`Store`和`_vm`
 
-**很重要的3个函数**
+**很重要的3个函数:**
 
 - `resetStore`：包含`resetStoreVM`和`installModule`
 - `resetStoreVM`

@@ -1,4 +1,4 @@
-## VueX源码分析(2)
+# VueX源码分析(2)
 
 剩余内容
 
@@ -9,9 +9,9 @@
 
 helpers要从底部开始分析比较好。也即先从辅助函数开始再分析那4个map函数`mapState`。
 
-#### helpers.js
+## helpers.js
 
-**getModuleByNamespace**
+**getModuleByNamespace:**
 
 ```js
 /**
@@ -31,11 +31,12 @@ function getModuleByNamespace (store, helper, namespace) {
 ```
 
 解析：
+
 - 通过namespace来寻找module，如果找不到打印错误信息（开发环境）
 - `_modulesNamespaceMap`这个Map存有所有的module
 - 在vuex中，不同的作用域用'/'来分隔开的(嵌套模块)，如商城中的购物车的namespace可以这样表示'shop/shopping_cart'
 
-**normalizeMap**
+**normalizeMap:**
 
 ```js
 /**
@@ -53,11 +54,12 @@ function normalizeMap (map) {
 ```
 
 解析：
+
 - 将数组或者对象转化成[Map, Map]的格式，Map关键字有{ key, val }
 - 如果是数组，生成Map的key === val
 - 如果是对象，生成Map的key就是对象的键名，val就是对象的值
 
-**normalizeNamespace**
+**normalizeNamespace:**
 
 ```js
 /**
@@ -79,13 +81,14 @@ function normalizeNamespace (fn) {
 ```
 
 解析：
+
 - 这里的fn就是mapState等4大map函数，使用柯里化缓存fn
 - `typeof namespace !== 'string'`第一个判断是支持两种传参模式：1、可以不传namespace直接传map，如mapActions(['action'])；2、支持传namespace，如mapActions('shop', ['action'])
 - 也即namespace可传可不传，不传最后初始化`namespace = ''`
 - 如果传了namespace，要检查最后一个字符带不带`'/'`，没有则补全
 - 这个函数就是在执行mapState、mapAction等4大map函数之前的namespace预处理，最终才把namesapce和map传个fn函数
 
-**createNamespacedHelpers**
+**createNamespacedHelpers:**
 
 ```js
 /**
@@ -102,6 +105,7 @@ export const createNamespacedHelpers = (namespace) => ({
 ```
 
 解析：
+
 - 这个bind函数涉及到柯里化，要理解柯里化才可理解这个意思
 - 柯里化和函数的参数个数有关，可以简单把柯里化理解成是一个收集参数的过程，只有收集够函数所需的参数个数，才会执行函数体，否则返回一个缓存了之前收集的参数的函数。
 - 4大map函数都要接受两个参数，namespace和map
@@ -110,9 +114,10 @@ export const createNamespacedHelpers = (namespace) => ({
 - 所以被`createNamespacedHelpers`返回的mapState只需传入1个参数map就可以执行了，且传入的第一个参数必须是map，因为namespace已经收集到了，再传入namespace最终执行的结果会是mapState(namespace, namespace)
 - 总之，如果了解过柯里化，这里应该很好理解。
 
-#### mapState、mapMutations、mapActions、mapGetters
+## mapState、mapMutations、mapActions、mapGetters
 
-**mapState**
+**mapState:**
+
 ```js
 /**
  * Reduce the code which written in Vue.js for getting the state.
@@ -146,6 +151,7 @@ export const mapState = normalizeNamespace((namespace, states) => {
 ```
 
 解析：
+
 - 4大map函数最终结果都是返回一个对象{}
 - `mappedState`其实就是`computed`的属性的函数，看这个函数要联想到`computed`，且这个函数的`this`也是指向vue的
 - 上面的`this.$state.state`和`this.$state.getters`是全局的`state`和`getters`
@@ -188,7 +194,7 @@ const res = {
 
 ```
 
-**mapMutations**
+**mapMutations:**
 
 ```js
 /**
@@ -220,12 +226,13 @@ export const mapMutations = normalizeNamespace((namespace, mutations) => {
 ```
 
 解析：
+
 - 这里也要判断是不是模块，不同情况的commit不同，是用全局的还是用模块的
 - `mappedMutation`是`methods`的函数，this同样指向Vue的实例
 - `val.apply(this, [commit].concat(args))`，是这种情况`mapMutations({ mutationName: (commit, ...arg) => commit('自定义') })`
 - `commit.apply(this.$store, [val].concat(args))`，是这种情况`mapMutations(['CHANGE_NAME'])`使用的时候还可以传参数`this['CHANGE_NAME'](name)`
 
-**mapGetters**
+**mapGetters:**
 
 ```js
 /**
@@ -257,11 +264,12 @@ export const mapGetters = normalizeNamespace((namespace, getters) => {
 ```
 
 解析：
+
 - `val = namespace + val`这里是，不管是模块的getter还是全局的getter最终都存在一个地方中($store.getters)，是模块的会有'/，所以这里要补充`namespace + val`
 - 所以最后返回的是`this.$store.getters[val]`
 - 还有`mappedGetter`对应`computed`属性的函数，this指向Vue实例
 
-**mapActions**
+**mapActions:**
 
 ```js
 /**
@@ -293,5 +301,6 @@ export const mapActions = normalizeNamespace((namespace, actions) => {
 ```
 
 解析：
+
 - 这个和`mapMutations`差不多，只是`commit`换成了`dispatch`
 - `mappedAction`对应`methods`的属性的函数，`this`也是指向Vue实例

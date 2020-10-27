@@ -1,7 +1,6 @@
-##React动态import()
+# React动态import()
 
 `react-router@v4`代码分离，推荐的import()。这里分享webpack配置和使用方法。
-
 
 首先安装两个必须的包
 
@@ -11,6 +10,7 @@ cnpm i react-loadable babel-plugin-syntax-dynamic-import -D
 
 react-loadable是官方推荐的动态加载组件，babel-plugin-syntax-dynamic-import是babel支持webpack的import()插件。
 配置方法：在`.babelrc`
+
 ```bash
 {
   "presets": [
@@ -21,6 +21,7 @@ react-loadable是官方推荐的动态加载组件，babel-plugin-syntax-dynamic
   ]
 }
 ```
+
 上面`babel-plugin`前缀是可以省略的。
 
 上面配好后，如果你配了eslint还是会报错的，如果eslint配置不对。报`import() undefined`
@@ -28,6 +29,7 @@ react-loadable是官方推荐的动态加载组件，babel-plugin-syntax-dynamic
 `cnpm i babel-eslint -D`
 
 然后在`.eslintrc`加上配置
+
 ```js
 module.exports = {
   //...若干配置
@@ -35,6 +37,7 @@ module.exports = {
   parser: "babel-eslint"
 }
 ```
+
 使用babel-eslint解析才可以识别import()
 
 然后就是使用了^_^。
@@ -64,6 +67,7 @@ export default (Loader) => {
 ```
 
 随便写一个需要动态导入的组件`Import.jsx`
+
 ```js
 import React from 'react'
 
@@ -78,6 +82,7 @@ export default Import
 ```
 
 包含的动态导入的容器组件`Test.jsx`
+
 ```js
 import React from 'react'
 import loadable from '@/utils/loadable'
@@ -97,6 +102,7 @@ export default Test
 ```
 
 然后在`main.jsx`
+
 ```js
 import React from 'react'
 import ReactDom from 'react-dom'

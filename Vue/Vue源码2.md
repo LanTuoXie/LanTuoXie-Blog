@@ -1,7 +1,7 @@
-##Vue源码分析(2)
+# Vue源码分析(2)
 
-由于工具是整个`./src/core`文件夹很多文件使用到，且是相对独立，最应该优先分析。   
-首先看`./src/core/util`整个文件下的`index.js`    
+由于工具是整个`./src/core`文件夹很多文件使用到，且是相对独立，最应该优先分析。
+首先看`./src/core/util`整个文件下的`index.js`
 由于用到`./src/core/config.js`全局配置文件，`config`只要配置下面这3部分
 
 - user
@@ -32,11 +32,11 @@ export { defineReactive } from '../observer/index'
 - `next-tick`主要是`Vue.nextTick()`函数
 - 还有一个`perf.js`这个主要是包装`window.performance`，只存在于浏览器环境，要检测
 
-### `env.js`
+## `env.js`
 
 这个文件很值得研究，有很多判断环境的方法
 
-**hasProto**
+**hasProto:**
 
 ```js
 // can we use __proto__?
@@ -45,7 +45,7 @@ export const hasProto = '__proto__' in {}
 
 - 能否使用`__proto__`
 
-**一些浏览器环境**
+**一些浏览器环境:**
 
 ```js
 // Browser environment sniffing
@@ -68,7 +68,7 @@ export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge
 - `android`和`ios`判断
 - `isChrome`有点特殊，由于谷歌之前的内核是`webkit`但是很多浏览器都带webkit，主要判断`chrome`
 
-**nativeWatch**
+**nativeWatch:**
 
 ```js
 // Firefox has a "watch" function on Object.prototype...
@@ -77,7 +77,7 @@ export const nativeWatch = ({}).watch
 
 - 火狐特有的watch
 
-**supportPassive**
+**supportPassive:**
 
 ```js
 export let supportsPassive = false
@@ -100,7 +100,7 @@ if (inBrowser) {
 - 也就是说，如果要想使用`event.preventDefault()`要定义事件处理程序时要设置`passive`为`false`否则不会阻止浏览器的默认行为
 - 由于这里定义的事件处理程序时`null`，可以不用`removeEventListener`
 
-**devtools**
+**devtools:**
 
 ```js
 // detect devtools
@@ -109,7 +109,7 @@ export const devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__
 
 - 浏览器插件，调试Vue的浏览器插件，如谷歌的Vue调试插件
 
-**isNative**
+**isNative:**
 
 ```js
 export function isNative (Ctor: any): boolean {
@@ -121,7 +121,7 @@ export function isNative (Ctor: any): boolean {
 - 一些原生的构造函数如：`Object、Function、Array、Boolean`等，还有ES6的`Map、Set`
 - 所以可以用来判断当前环境是否支持ES6等新的功能和特性
 
-**hasSymbol**
+**hasSymbol:**
 
 ```js
 export const hasSymbol =
@@ -132,7 +132,7 @@ export const hasSymbol =
 - 判断当前环境是否支持`Symbol`，判断的同时还判断`Reflect`，`Reflect`主要管理对象`Object`的特性
 - `Reflect.ownKeys`可以拿到所有的`keys`包括`Symbol`和一些不能遍历的属性，以及原型链`prototype`
 
-**_Set**
+**_Set:**
 
 ```js
 let _Set
@@ -179,7 +179,7 @@ interface SimpleSet {
 - `generateComponentTrace`：收集组件树，树的基本数据结构是数组
 - `formatComponentName`：格式化组件名为`<componentName>`好查找错误的组件
 
-**repeat**
+**repeat:**
 
 ```js
   const repeat = (str, n) => {
@@ -203,7 +203,7 @@ interface SimpleSet {
 - `str += str`一直在迭代，重复的次数为`2^n`
 - `n % 2 === 1`只有奇偶位为1的时候`res`才收集`str`，而只有`| 8 |和| 2 |`位才为1，所以`res`迭代的次数只有2次，而`str`这个时候的重复次有由`8 + 2`刚好重复10次
 
-**warn、tip**
+**warn、tip:**
 
 ```js
   warn = (msg, vm) => {
@@ -231,7 +231,7 @@ interface SimpleSet {
 - 如果没有`vm`就是普通的警告
 - `tip`：配置的`config.silent`，要开启才会提示
 
-**formatComponentName**
+**formatComponentName:**
 
 ```js
   formatComponentName = (vm, includeFile) => {
@@ -286,7 +286,7 @@ interface SimpleSet {
 - 就是格式化组件名成`<ComponentName>`第一个字符都格式化大写，如果没有name的就`<Anonymous>`
 - 如果那个组件存有文件的信息，还会拼上文件信息
 
-**generateComponentTrace**
+**generateComponentTrace:**
 
 ```js
   generateComponentTrace = vm => {
@@ -360,7 +360,6 @@ found in
 - 如果`vm`是数组，有递归渲染自己，如单元测试案例中的`render: h => i++ < 5 ? h(one) : h(two)`，递归渲染5次
 - `last.constructor === vm.constructor`这个就是判断递归的依据，递归的都是由同一个构造函数创建的，所以用构造函数是否一样来判断是否处于递归中
 
-
 ### error.js
 
 主要有三个函数
@@ -419,7 +418,7 @@ function logError (err, vm, info) {
 
 ### lang.js
 
-**isReserved**
+**isReserved:**
 
 ```js
 /**
@@ -434,7 +433,7 @@ export function isReserved (str: string): boolean {
 - 检查一个字符串是否含有`$`或者`_`
 - 这两个字符代表是预留的变量如`$data`或`_data`这些都是预留的变量
 
-**def**
+**def:**
 
 ```js
 /**
@@ -452,7 +451,7 @@ export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
 
 - 封装`Object.defineProperty`
 
-**parsePath**
+**parsePath:**
 
 ```js
 /**
@@ -478,4 +477,3 @@ export function parsePath (path: string): any {
 - 比如有个对象`const obj = { a: { b: { c: 2 } } }`
 - `parsePath('a.b.c')`后就返回一个函数`fn`，`fn(obj)`会直接返回`2`，也就是生成一个可以缓存要访问的对象的一系列键名的函数，
 - 那个`path`应该很常用才使用，这样的做法可以避免一个变量是`undefined`的时候，还调属性`undefined.b`会报错，这种方式调用一个对象还可以避免繁琐的`obj && obj.a && obj.a.b && obj.a.b.c`
-

@@ -1,6 +1,7 @@
-#构建Vue项目
+# 构建Vue项目
 
-####按照官网教程安装
+## 按照官网教程安装
+
 ```bash
 //先安装脚手架
 cnpm i -g vue-cli
@@ -20,19 +21,25 @@ cd my-project
 //还有其他的命令根据创建项目的时候的选择决定
 
 ```
+
 webpack模板默认安装了`vue`、`vue-router`、`postcss`、`babel`，如果需要其它的可以自己再安装。
 
-####安装sass
+## 安装sass
+
 ```bash
 cnpm i --save-dev node-sass sass-loader
 ```
+
 安装好后就可以在`.vue`文件style便签设置 `<style scoped lang="scss">`就可以开启scss功能
 
-####安装axios
+## 安装axios
+
 ```bash
 cnpm i --save axios
 ```
+
 在`main.js`文件中引入`axios`并将其指定为`Vue.prototype.$http = axios`
+
 ```js
 //main.js
 //全局的Vue，所有组件都是这个Vue的实例
@@ -45,10 +52,12 @@ Vue.prototype.$http = axios;
 
 ```
 
-####安装vuex
+## 安装vuex
+
 ```bash
 cnpm i --save vuex
 ```
+
 在`main.js`文件中引入`Vuex`，使用`Vue.use(Vuex)`且创建`store`，然后将`store添加到全局 new Vue({store})`
 
 ```js
@@ -72,36 +81,36 @@ new Vue({
 })
 ```
 
-####项目结构
+## 项目结构
 
 - `/src`
-    - `/assets`
-    - `/components`
-    - `/containers`
-    - `/modules`
-    - `/router`
-    - `/scss`
-    - `App.vue`
-    - `main.js`
+  - `/assets`
+  - `/components`
+  - `/containers`
+  - `/modules`
+  - `/router`
+  - `/scss`
+  - `App.vue`
+  - `main.js`
 
-**/assets**
+**/assets:**
 
 主要放`图片`、`字体`等静态文件
 
-**/components**
+**/components:**
 
 `公用组件`，所有页面都可以公用的组件，或者单例组件，像`弹出窗`、`按钮`、等可以多次复用的组件
 
-**/containers**
+**/containers:**
 
 `页面组件`，`router`中的路由组件，`相对路由`来划分这个文件夹的结构<br>
 比如路由`/user/change_psw` 和`/login`
 
 - `/containers`
-    - `User.vue`
-    - `/user`
-        - `ChangePsw.vue`
-    - `Login.vue`
+  - `User.vue`
+  - `/user`
+    - `ChangePsw.vue`
+  - `Login.vue`
 
 ```js
 import User from '@/containers/User';
@@ -128,14 +137,14 @@ const router = [
 ]
 ```
 
-**/modules**
+**/modules:**
 
 `Vuex`的状态管理，这里按每个页面划分，当然还可以别的方法，这里只供参考<br>
 
 - `/modules`
-    - `modules.js`
-    - `index.js`
-    - `user.js`
+  - `modules.js`
+  - `index.js`
+  - `user.js`
 
 `modules.js`负责将所有模块收集起来(类似reduce的合成)，`index.js`和`user.js`分别管理`页面index和页面user的全局状态`
 
@@ -190,15 +199,15 @@ new Vue({
 })
 ```
 
-**/router**
+**/router:**
 
 如果项目比较大，可以按模块来划分这个文件夹的结构。小项目，一个文件即可。
 
 - `/router`
-    - `buy-ticket.js`
-    - `index.js`
+  - `buy-ticket.js`
+  - `index.js`
   
-和别的文件一样，`index.js`是所有模块路由的总和，`buy-ticket.js`是买票模块的路由<br>
+和别的文件一样，`index.js`是所有模块路由的总和，`buy-ticket.js`是买票模块的路由 <br>
 由于vue的路由是可以嵌套的，我们完全可以拆分路由，然后再合并。
 
 ```js
@@ -244,9 +253,8 @@ export default new Router({
 
 具体项目，要按项目的功能来拆分，以上只供参考。
 
-**/scss**
+**/scss:**
 
 这个样式项目结构，一言难尽，可以了解我的scss相关的文章
 
 [Sass项目结构之 7-1模式](http://www.cnblogs.com/lantuoxie/p/8682546.html)
-

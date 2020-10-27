@@ -2,11 +2,11 @@
 
 学习资料
 
-- (菜鸟教程)[https://www.runoob.com/python3/python3-tutorial.html]
-- (Python 官方文档)[https://docs.python.org/zh-cn/3/library/functions.html]
-- (Python 简明教程)[https://bop.mol.uno/11.modules.html]
-- (Python Cookbook)[https://python3-cookbook.readthedocs.io/zh_CN/latest/]
-- (Python awesome-python-cn)[https://github.com/jobbole/awesome-python-cn]
+- [菜鸟教程](https://www.runoob.com/python3/python3-tutorial.html)
+- [Python 官方文档](https://docs.python.org/zh-cn/3/library/functions.html)
+- [Python 简明教程](https://bop.mol.uno/11.modules.html)
+- [Python Cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/)
+- [Python awesome-python-cn](https://github.com/jobbole/awesome-python-cn)
 
 ## 特殊的地方
 
