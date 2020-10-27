@@ -175,9 +175,9 @@ canvas基本功能的总结和一些问题解决笔记
 - 当前应用的变形，也就是原点坐标的位置不改变，以及旋转、缩放等
 - 一些样式，配色方案：`strokeStyle、fillStyle`
 - 阴影：`shadowOffsetX、shadowOffsetY、shadowBlur、shadowColor`
-- 透明度：`globalAlpha `
+- 透明度：`globalAlpha`
 - 线的样式：`lineWidth、lineCap、lineJoin、miterLimit`
-- 图片合成的模式：`globalCompositeOperation `
+- 图片合成的模式：`globalCompositeOperation`
 - 裁剪路径：`clip()`
 
 ## transform（操作原点）

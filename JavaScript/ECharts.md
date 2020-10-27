@@ -8,5 +8,3 @@
 - `events`：一些echarts自定义的事件，用于交互等逻辑
 
 ## 最主要的setOption
-
-

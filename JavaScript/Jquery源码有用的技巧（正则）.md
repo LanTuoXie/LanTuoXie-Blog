@@ -1,10 +1,11 @@
-## Jquery源码有用的技巧--(正则)
+# Jquery源码有用的技巧--(正则)
 
 `@`表示在jquery项目的`./src`的当前路径，`@/core`表示`src/core`
 
-#### @/core/var/rsingleTag.js
+## @/core/var/rsingleTag.js
 
 这个函数主要有2个功能
+
 - 匹配单个没有属性的HTML标签
 - 可以捕获标签名称
 
@@ -16,7 +17,7 @@
 - `\x20`表示空格
 - `(?:<\/\1>|)`：表示不捕获，且可有可无，这里的`|`表示`(<\/\1>)?`
 
-#### @/var/pnum.js
+## @/var/pnum.js
 
 主要匹配字符串是不是符合基本的数字类型的格式
 
@@ -26,7 +27,7 @@
 - `(?:\d*\.|)`：匹配浮点数
 - `(?:[eE][+-]?\d+|)`：匹配科学计数法
 
-#### @/var/rnothtmlwhite.js
+## @/var/rnothtmlwhite.js
 
 非`whitespace`  
 正则：`/[^\x20\t\r\n\f]+/g`。相当于`\s`

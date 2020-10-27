@@ -1,15 +1,15 @@
-##JS MarcoTasks MicroTasks
+# JS MarcoTasks MicroTasks
 
 在JS的`event loop`中，有两种任务队列`microtasks`和`macrotasks`
 
-**microtasks**
+**microtasks:**
 
 - process.nextTick
 - Promise
 - Object.observe
 - MutationObserver
 
-**macrotasks**
+**macrotasks:**
 
 - setTimeout
 - setInterval
@@ -17,8 +17,8 @@
 - I/O(Ajax, fs)
 - UI渲染
 
-在一个事件循环event loop的周期中，一个task应该从macrotask队列开始执行。当这个macrotask结束后，所有的microtasks将在同一个cycle中执行。    
-且在microtasks执行时还可以加入更多的microtask，然后一个一个的执行，直到microtask队列清空。   
+在一个事件循环event loop的周期中，一个task应该从macrotask队列开始执行。当这个macrotask结束后，所有的microtasks将在同一个cycle中执行。
+且在microtasks执行时还可以加入更多的microtask，然后一个一个的执行，直到microtask队列清空。
 
 ```js
 console.log('start')
@@ -62,61 +62,62 @@ Promise.resolve()
     })
 ```
 
-event loop1:    
-macrotasks: [主程序代码]   
-microtasks: []    
+event loop1:
+macrotasks: [主程序代码]
+microtasks: []
 
-执行macrotasks队列，也即执行主程序代码，收集macro或micro的tasks    
-输出: 'start'   
-收集的macrotasks（下次循环的）: [setInterval, setTimeout]    
-收集的microtasks（当前循环的）: [Promise]    
+执行macrotasks队列，也即执行主程序代码，收集macro或micro的tasks
+输出: 'start'
+收集的macrotasks（下次循环的）: [setInterval, setTimeout]
+收集的microtasks（当前循环的）: [Promise]
 
-macrotasks队列执行完毕，这时候microtasks: [Promise]不为空，执行microtasks队列     
-输出： 'promise1'    
-输出 ： 'promise2'   
+macrotasks队列执行完毕，这时候microtasks: [Promise]不为空，执行microtasks队列
+输出： 'promise1'
+输出 ： 'promise2'
 这时候microtasks为空
 
-下次循环开始之前的队列状态     
-macrotasks: [setInterval, setTimeout]   
-microtasks: []    
+下次循环开始之前的队列状态
+macrotasks: [setInterval, setTimeout]
+microtasks: []
 
-event loop2:    
-执行macrotasks队列      
-执行setInterval      
-输出：'setInterval'，且收集setInterval到下次循环的macrotasks中    
-执行setTimeout    
-输出：'setTimeout 1'，且收集Promise到当前循环的microtasks: [Promise]   
+event loop2:
+执行macrotasks队列
+执行setInterval
+输出：'setInterval'，且收集setInterval到下次循环的macrotasks中
+执行setTimeout
+输出：'setTimeout 1'，且收集Promise到当前循环的microtasks: [Promise]
 
-由于当前循环的microtasks不为空，执行队列中的任务Promise     
-输出：'promise3'    
-输出: 'promise4'    
+由于当前循环的microtasks不为空，执行队列中的任务Promise
+输出：'promise3'
+输出: 'promise4'
 收集setTimeout到下次循环的macrotasks中
 这时候microtasks为空
 
-下次循环开始之前的队列状态   
-macrotasks: [setInterval, setTimeout]   
+下次循环开始之前的队列状态
+macrotasks: [setInterval, setTimeout]
 microtasks: []
 
-event loop3:    
-执行macrotasks队列    
-执行setInterval   
-输出: 'setInterval'，且收集setInterval到下次循环的macrotasks: [setInterval]中   
-执行setTimeout    
+event loop3:
+执行macrotasks队列
+执行setInterval
+输出: 'setInterval'，且收集setInterval到下次循环的macrotasks: [setInterval]中
+执行setTimeout
 输出: 'setTimeout2'，且收集Promise到当前的microtasks: [Promise]
 
 由于当前循环的microtasks不为空，执行队列中的任务Promise
 输出: 'promise5'  
-输出: 'promise6'    
+输出: 'promise6'
 清除定时器clearInterval，所以下次循环的macrotasks的setInterval被清除
 
-下次循环开始之前的队列状态   
-macrotasks: []    
+下次循环开始之前的队列状态
+macrotasks: []
 microtasks: []
 
-event loop4:    
+event loop4:
 由于macrotasks为空，和microtasks为空，程序处于等待状态。
 
 上面程序总的输出结果是
+
 ```js
 // event loop1
 start
@@ -144,8 +145,3 @@ promise 6
 - 一个循环开始的时候microtasks（大多情况）是空的，或者说当前循环的microtasks一开始是空的，在macrotasks执行完后可能不为空
 - microtasks要等到macrotasks队列执行完毕才会开始执行，且microtasks的任务在执行的过程中，是可以添加任务的，只要当前循环还未结束
 - 在当前循环中收集的macro任务是收集到下一个循环的macrotasks，而当前循环收集的micro任务是收集到当前microtasks中
-
-
-
-
-
