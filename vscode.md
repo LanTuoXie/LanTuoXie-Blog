@@ -1,7 +1,6 @@
 # vscode 用户自定义代码片段
 
-
-### 变量
+## 变量
 
 - `TM_SELECTED_TEXT`：当前选定的文本或空字符串
 - `TM_CURRENT_LINE`：当前行的内容
@@ -31,7 +30,7 @@
 - `CURRENT_MINUTE`：当前分钟
 - `CURRENT_SECOND`：当前秒数
 
-### format_string
+## format_string
 
 - `${$1:/upcase}`：大写字母
 - `${$1:/downcase}`：小写字母
