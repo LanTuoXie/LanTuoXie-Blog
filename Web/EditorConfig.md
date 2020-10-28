@@ -1,11 +1,13 @@
-#[EditorConfig](http://editorconfig.org/#overview)
+# [EditorConfig](http://editorconfig.org/#overview)
 
-####.editorconfig文件
+## .editorconfig文件
+
 在很多开源项目中，会出现这个文件，这个文件有何作用？<br>
 `editorconfig` 帮助开发者的(编辑器和IDEs)**定义和维护**编程风格。<br>
 有些编辑器不用安装插件，会自动识别`.editorconfig`文件，然后会按文件中的规范设置编程风格<br>
 
-**不用安装插件的**
+**不用安装插件的:**
+
 - `GitHub`
 - `IntelliJIDEA`
 - `VisualStudio`
@@ -13,7 +15,8 @@
 
 等等，其他的可以在[EditorConfig](http://editorconfig.org/#overview)查看
 
-**要安装插件**
+**要安装插件:**
+
 - `ATOM`
 - `eclipse`
 - `Sublime Text`
@@ -23,7 +26,7 @@
 等等，其他的可以在[EditorConfig](http://editorconfig.org/#overview)查看<br>
 安装插件教程也可以在官网查看
 
-####文件匹配规则
+## 文件匹配规则
 
 - `*` : 匹配任何**字符串**，除了路径分隔符**/**  
 - `**` : 匹配任何**字符串**
@@ -34,7 +37,7 @@
 - `{1..9}` : 表示匹配的次数在1~9之间都可以
 - `#` ： 表示注释
 
-####支持的编程风格属性
+## 支持的编程风格属性
 
 - `indent_style` ： 缩进风格，可能值为`tab`(Tab键) 和 `space`(空格键)，一般敲了`{}`我们要在中间再敲enter键，会自动缩进，这个决定是用tab还是space
 - `indent_size` : 主要决定space次数，一般风格推荐2或者4
@@ -44,9 +47,9 @@
 - `insert_final_newline` : `true` or `false` 确保文件最后一行是一个空行
 - `root` : `true` or `false` 是否以`.editorconfig`文件为根目录，使用**文件匹配**时会以这个为**开始相对路径**
 
-####webpack文件为例
+## webpack文件为例
 
-```
+```bash
 #[采用的相对路径以这个文件开始]
 root = true
 
@@ -78,5 +81,4 @@ charset = utf-8-bom
 #所有markdown文件的规则
 [*.md]
 trim_trailing_whitespace = false
-
 ```

@@ -11,7 +11,7 @@
 ## 代码
 
 ```js
-import HashTable from '../hash-table/HashTable';
+import HashTable from "../hash-table/HashTable";
 
 export default class TrieNode {
   /**
@@ -60,11 +60,7 @@ export default class TrieNode {
     // Delete childNode only if:
     // - childNode has NO children,
     // - childNode.isCompleteWord === false.
-    if (
-      childNode
-      && !childNode.isCompleteWord
-      && !childNode.hasChildren()
-    ) {
+    if (childNode && !childNode.isCompleteWord && !childNode.hasChildren()) {
       this.children.delete(character);
     }
 
@@ -99,8 +95,8 @@ export default class TrieNode {
    */
   toString() {
     let childrenAsString = this.suggestChildren().toString();
-    childrenAsString = childrenAsString ? `:${childrenAsString}` : '';
-    const isCompleteString = this.isCompleteWord ? '*' : '';
+    childrenAsString = childrenAsString ? `:${childrenAsString}` : "";
+    const isCompleteString = this.isCompleteWord ? "*" : "";
 
     return `${this.character}${isCompleteString}${childrenAsString}`;
   }

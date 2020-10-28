@@ -5,7 +5,7 @@
 ## 基本部署
 
 ```bash
-#登陆到服务器 
+#登陆到服务器
 cd /mnt/docker/nginx/ssc/frontEnd/dist
 
 rz  #选择本地压缩包上传
