@@ -1,4 +1,4 @@
-## wepy框架构建小程序（1）
+# wepy框架构建小程序（1）
 
 基本操作：
 
@@ -16,7 +16,7 @@ cd myproject && npm install
 npm run dev
 ```
 
-### vscode 编辑器设置
+## vscode 编辑器设置
 
 在编辑器设置中设置：
 
@@ -31,10 +31,10 @@ npm run dev
 
 简单点说就是，`用户设置`是全局设置，而`工作区设置就是当前打开的文件夹有效`，也就是局部的设置。
 
-### 定义事件（重点）
+## 定义事件（重点）
 
-事件在web端是很重要的部分，这里要搞得清清楚楚。   
-事件分`捕获阶段`、`事件触发点`、`冒泡阶段`。   
+事件在web端是很重要的部分，这里要搞得清清楚楚。
+事件分`捕获阶段`、`事件触发点`、`冒泡阶段`。
 我们用的最多的是`冒泡阶段`。原生小程序定义事件的方式是键值对的方式`key:value`。
 
 原生小程序的`keys`:
@@ -56,7 +56,7 @@ wepy的事件定义：
 
 这些语法就是`Vue`的语法，就是要区分这个`key:value`，key是什么，value是什么
 
-### 安装Sass
+## 安装Sass
 
 ```bash
 npm i wepy-compiler-sass --save-dev
@@ -64,7 +64,7 @@ npm i wepy-compiler-sass --save-dev
 
 然后在`<style lang='scss'>`
 
-### `.wpy`文件
+## `.wpy`文件
 
 - `<template>`：对应`.wxml`
 - `<script>`：分成两部分。1、逻辑部分：除了config对象，其他对应`.js`文件；2、配置部分：即config对象，对应`.json`
@@ -82,7 +82,7 @@ npm i wepy-compiler-sass --save-dev
 - template：默认值`wxml`、可能值`wxml、xml、pug`
 - script：默认值`babel`、可能值`babel、TypeScript`
 
-### 状态管理器： `redux` + `wepy-redux`
+## 状态管理器： `redux` + `wepy-redux`
 
 先用`redux`生成`store`
 
@@ -171,7 +171,7 @@ dispatch({ type: 'TEST', payload: 1 })
 - wepy还使用了`redux-actions`，来实现`mutations`和`actions`。如果不喜欢这个可以自己换`redux-thunk`，都可以，这些内容都属于redux（异步action），有自己的实现方案就行，你甚至都不用也可以。
 - 关于actions，如果是异步的，用test2的方式，同步的直接一个type字符串或者一个action对象
 
-### 页面生命周期钩子、组件生命周期钩子
+## 页面生命周期钩子、组件生命周期钩子
 
 - `onLoad`
 - `onShow`
@@ -183,7 +183,7 @@ dispatch({ type: 'TEST', payload: 1 })
 
 还要区分三大实例`App实例`、`Page实例`、`Component实例`
 
-### 组件间通信
+## 组件间通信
 
 小程序的组件间通信和web端的组件是有分别的，小程序的组件，两者通信主要通过广播的方式。
 

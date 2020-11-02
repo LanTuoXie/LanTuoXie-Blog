@@ -31,6 +31,7 @@ interface PropertyDescriptorMap {
 ## typescript中一些有用的类型方法
 
 Partial:
+
 ```ts
 /**
  * Make all properties in T optional
@@ -42,6 +43,7 @@ type Partial<T> = {
 ```
 
 Required:
+
 ```ts
 /**
  * Make all properties in T required
@@ -53,6 +55,7 @@ type Required<T> = {
 ```
 
 Readonly:
+
 ```ts
 /**
  * Make all properties in T readonly
@@ -64,6 +67,7 @@ type Readonly<T> = {
 ```
 
 Pick:
+
 ```ts
 /**
  * From T, pick a set of properties whose keys are in the union K
@@ -75,6 +79,7 @@ type Pick<T, K extends keyof T> = {
 ```
 
 Record:
+
 ```ts
 /**
  * Construct a type with a set of properties K of type T
@@ -86,6 +91,7 @@ type Record<K extends keyof any, T> = {
 ```
 
 Exclude:
+
 ```ts
 /**
  * Exclude from T those types that are assignable to U
@@ -95,6 +101,7 @@ type Exclude<T, U> = T extends U ? never : T;
 ```
 
 Extract:
+
 ```ts
 /**
  * Extract from T those types that are assignable to U
@@ -103,6 +110,7 @@ type Extract<T, U> = T extends U ? T : never;
 ```
 
 Omit:
+
 ```ts
 /**
  * Construct a type with the properties of T except for those in type K.
@@ -111,6 +119,7 @@ type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 ```
 
 NonNullable:
+
 ```ts
 /**
  * Exclude null and undefined from T
@@ -119,6 +128,7 @@ type NonNullable<T> = T extends null | undefined ? never : T;
 ```
 
 Parameters:
+
 ```ts
 /**
  * Obtain the parameters of a function type in a tuple
@@ -127,6 +137,7 @@ type Parameters<T extends (...args: any) => any> = T extends (...args: infer P) 
 ```
 
 ConstructorParameters:
+
 ```ts
 /**
  * Obtain the parameters of a constructor function type in a tuple
@@ -135,6 +146,7 @@ type ConstructorParameters<T extends new (...args: any) => any> = T extends new 
 ```
 
 ReturnType:
+
 ```ts
 /**
  * Obtain the return type of a function type
@@ -143,6 +155,7 @@ type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => i
 ```
 
 InstanceType:
+
 ```ts
 /**
  * Obtain the return type of a constructor function type

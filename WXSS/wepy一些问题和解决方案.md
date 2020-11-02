@@ -237,5 +237,3 @@ export default class Index extends wepy.page {
 - 根据偏移量设置有偏差，特别是底部`bottom: 0`是不会到底部，可以`bottom: -0.1%`，这个组件的定位有偏差，需要`0.1%`
 - 需要根据`position: absolute`定位做一种照相聚焦的效果，这时候要用到`cover-view`，可以做到，但是由于定位有点偏差，需要调调，否则会有一条小黑线
 - 小黑线是定位有误差，2个遮罩板重叠了
-
-### 

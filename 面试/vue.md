@@ -46,7 +46,7 @@ export const mutations = {
 </script>
 ```
 
-`eventBus`的方式`Vue.$on`和`Vue.$emit`，甚至可以自己定义一个，本质就是`订阅与发布模式`，这里还可以`Vue.$off/Vue.$once`如果是一次性的状态，好处还是独立出一个独立的文件`eventBus.js`
+`eventBus` 的方式 `Vue.$on` 和 `Vue.$emit`，甚至可以自己定义一个，本质就是 `订阅与发布模式`，这里还可以 `Vue.$off/Vue.$once` 如果是一次性的状态，好处还是独立出一个独立的文件 `eventBus.js`。
 
 ```js
 import Vue from 'vue'

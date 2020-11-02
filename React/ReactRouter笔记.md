@@ -1,6 +1,6 @@
-##React-Router笔记
+# React-Router笔记
 
-### <Route>
+## <Route>
 
 `要把<Route>当成是一个高阶组件`
 
@@ -50,7 +50,7 @@
 - `strict`: 相对于上面，严格要求当前页面的`location.pathname === currPathname`
 - `sensitive`: 路由区不区分大小写
 
-### <Switch>
+## <Switch>
 
 被`<Switch>`包含的`<Route>`只会渲染一个
 
@@ -64,6 +64,7 @@
 ```
 
 比如上面的结构，其实就如下面这段代码
+
 ```js
 switch (currPath) {
   case '/': {
@@ -86,7 +87,7 @@ switch (currPath) {
 
 注意是`return`，所以`<Switch>`后只有一个路由组件被渲染
 
-### withRouter
+## withRouter
 
 这个高阶组件主要是给组件的`props`注入`match、location、history`，如果有哪些组件想拿到当前路由的信息可以使用这个
 
@@ -97,4 +98,3 @@ import { withRouter } from 'react-router'
 
 withRouter(connect(...)(MyComponent))
 ```
-

@@ -2,9 +2,9 @@
 
 ## .editorconfig文件
 
-在很多开源项目中，会出现这个文件，这个文件有何作用？<br>
-`editorconfig` 帮助开发者的(编辑器和IDEs)**定义和维护**编程风格。<br>
-有些编辑器不用安装插件，会自动识别`.editorconfig`文件，然后会按文件中的规范设置编程风格<br>
+在很多开源项目中，会出现这个文件，这个文件有何作用？</br>
+`editorconfig` 帮助开发者的(编辑器和IDEs)**定义和维护**编程风格。</br>
+有些编辑器不用安装插件，会自动识别`.editorconfig`文件，然后会按文件中的规范设置编程风格 </br>
 
 **不用安装插件的:**
 
@@ -23,7 +23,7 @@
 - `Notepad++`
 - `vsCode`
 
-等等，其他的可以在[EditorConfig](http://editorconfig.org/#overview)查看<br>
+等等，其他的可以在[EditorConfig](http://editorconfig.org/#overview)查看 </br>
 安装插件教程也可以在官网查看
 
 ## 文件匹配规则

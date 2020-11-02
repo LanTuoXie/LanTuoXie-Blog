@@ -15,8 +15,8 @@
 
 **Template模板:**
 
-主要负责`HTML的结构`，让`HTML`更有层次感。<br>
-可以按`功能模块`来构建HTML的结构<br>
+主要负责`HTML的结构`，让`HTML`更有层次感。</br>
+可以按`功能模块`来构建HTML的结构</br>
 常见的如：
 
 人体架构
@@ -58,7 +58,7 @@
 - `弹性盒子布局`
 - `Grid布局`
 
-`Grid布局`由于兼容性问题，现在大多采用`浮动布局`和`弹性盒子`(IE10+ , 移动端)<br>
+`Grid布局`由于兼容性问题，现在大多采用`浮动布局`和`弹性盒子`(IE10+ , 移动端)</br>
 
 浮动布局
 
@@ -127,7 +127,7 @@
 
 **Module组件:**
 
-各个组件特有的结构和样式。<br>
+各个组件特有的结构和样式。</br>
 以下类：
 
 - `btn`
@@ -135,7 +135,7 @@
 - `modal md-title`
 
 这里只要使用了继承的机制
-`btn-error`继承了`btn`的基本样式，然后扩展了自己的样式`error` <br>
+`btn-error`继承了`btn`的基本样式，然后扩展了自己的样式`error` </br>
 `md-title`继承了`modal`的基本样式，然后添加自己专属样式
 在`sass`中，可以通过占位符`%`和搭配`@extend`实现
 
@@ -157,9 +157,9 @@ SMACSS的5大核心分类
 
 **Base:**
 
-负责定义页面的默认样式，由于不同的浏览器都有自己的默认样式，要做到在不同浏览器上效果一致，需要开发者重写这些样式。<br>
-常见的base配置有[Reset.css](https://meyerweb.com/eric/tools/css/reset/) 和 [normalize.css](http://necolas.github.io/normalize.css/)<br>
-由于中文和英文排版和显示有区别，推荐参考妹子ui的base。<br>
+负责定义页面的默认样式，由于不同的浏览器都有自己的默认样式，要做到在不同浏览器上效果一致，需要开发者重写这些样式。</br>
+常见的base配置有[Reset.css](https://meyerweb.com/eric/tools/css/reset/) 和 [normalize.css](http://necolas.github.io/normalize.css/)</br>
+由于中文和英文排版和显示有区别，推荐参考妹子ui的base。</br>
 base文件的规范：该文件只使用`标签选择器`、`标签选择器配伪类`、`*`，`!important`不应该出现在该文件中
 
 ```scss
