@@ -7,6 +7,8 @@
 - 节点操作： `nodeComparator` `setValue()` `setLeft()` `setRight()` `removeChild()` `replaceChild()` `copyNode()`
 - 遍历输出： `traverseInOrder()` `toString()`
 
+动态属性：通过调用 `Object` 内部的 `get()` `set()` 方式改造`对象属性`，其中 `height` 属性默认有`递归迭代`的特性。树结构的检索可以写成递归，只需配合几个动态属性。
+
 ```js
 import Comparator from '../../utils/comparator/Comparator';
 import HashTable from '../hash-table/HashTable';
