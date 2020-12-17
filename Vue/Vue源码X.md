@@ -39,7 +39,7 @@ declare interface GlobalAPI {
 - `Vue.component`
 - `Vue.filter`
 - `Vue.directive`
- 
+
 ```js
 /* @flow */
 
@@ -78,7 +78,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
 ```
 
 - `ASSET_TYPES`就是`['component', 'filter', 'directive']`
-- `validateComponentName`是验证注册的组件名是否符合规范（组件名只能是字母和'-'），以及不能是HTML的标签名以及Vue预留的标签名<component>
+- `validateComponentName`是验证注册的组件名是否符合规范（组件名只能是字母和'-'），以及不能是HTML的标签名以及Vue预留的标签名 </component>
 - `this.options[type + 's'][id]`：是`components`、`filters`、`directives`都是按`id`为索引的字典数据存储结构
 - 不传`definition`那就是在`this.options[type + 's']`中根据`id`查找相应类型的，传就是注册新的`component || filter || directive`
 - `definition.name = definition.name || id`：组件名必须要有，如果没有定义组件名，默认使用组件的id

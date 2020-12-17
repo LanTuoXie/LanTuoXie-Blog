@@ -26,7 +26,7 @@ export function def (obj: Object, key: string, val: any, enumerable?: boolean) {
 ```
 
 - 能够进行数据拦截的数据类型是`Object`类型，也是为什么data要返回一个对象
-- 最后那个`enumerable`是否可以遍历属性，默认值是false，也就是如果不设为true，那么设置的属性是隐藏属性，`in`操作符无法获取`Object.keys`也无法获取
+- 最后那个`enumerable`是否可以遍历属性，默认值是false，也就是如果不设为true，那么设置的属性是隐藏属性，`in`操作符无法获取;`Object.keys`也无法获取
 - 但是`Object.getOwnPropertyNames`可以获取到这些不可遍历的属性
 
 接下来的内容由简到难，先从关联性比较低的文件开始分析。
@@ -237,7 +237,7 @@ export function popTarget () {
 
 ## `watcher.js`
 
-根据文件名就知道，这是一个观察者，拥有订阅的功能    
+根据文件名就知道，这是一个观察者，拥有订阅的功能
 观察者的功能：
 
 - 解析一个表达式`expression`
