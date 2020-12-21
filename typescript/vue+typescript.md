@@ -54,10 +54,10 @@
 - 类
 - 继承
 - 公共-私有-保护 `public` `private` `protected`
-- readonly 修饰符
-- 存取器 get set
-- 静态属性 static
-- 抽象类 abstract
+- `readonly` 修饰符
+- 存取器 `get set`
+- 静态属性 `static`
+- 抽象类 `abstract`
 - 把类当作接口使用
 
 ## 函数 function
