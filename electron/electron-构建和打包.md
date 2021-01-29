@@ -52,7 +52,7 @@ yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
 
 - 如果工具无法下载第一个包`xxx.zip`，可以试试`electron_mirror https://mirrors.huaweicloud.com/electron/` 华为的镜像，下载挺快的。
 - 其它包可以在上方淘宝镜像中手动下载，然后安装到`C:\Users\Administrator\AppData\Local\electron-builder\Cache`下方。
-- `unpack包`打包好后
+- `unpack包`打包好后。
 
 
 
