@@ -56,7 +56,7 @@ yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/
 
 
 
-打包之前需要注意的事项：
+**打包之前需要注意的事项：**
 
 - 先跑 `npm run build:clean`。
 - 然后把`dist/electron`的文件清空，如果打包工具没有安装。
